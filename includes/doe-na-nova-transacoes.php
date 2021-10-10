@@ -22,11 +22,6 @@
 	?>
 
 
-
-
-
-
-
 			<div class="table-responsive mt-3" id="transacoes">
 				<table class="table align-middle">
 					<tbody>

@@ -14,10 +14,10 @@ function doe_na_nova_form_js()
 		true
 	);
 
-	wp_register_script(
-		'font-awesome',
-		'https://use.fontawesome.com/releases/v5.8.1/js/all.js'
-	);
+	// wp_register_script(
+	// 	'font-awesome',
+	// 	'https://use.fontawesome.com/releases/v5.8.1/js/all.js'
+	// );
 
 	wp_register_script(
 		'functions-js',
