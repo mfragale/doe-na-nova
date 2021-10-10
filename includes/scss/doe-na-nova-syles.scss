@@ -1,0 +1,553 @@
+//$white:    #fff;
+$gray-100: #f1f5fa;
+$gray-200: #e9ecef;
+$gray-300: #dde0e6;
+$gray-400: #b5b8bf;
+$gray-500: #6e7489;
+$gray-600: #6c757d;
+$gray-700: #404251;
+$gray-800: #343a40;
+$gray-900: #161720;
+//$black:    #000;
+
+$gn: #f0ff00;
+
+$primary: #7c88f5;
+$secondary: #6e7489;
+$success: #07fc6d;
+$info: #3a4cef;
+$warning: #f2cc9c;
+$danger: #ff694c;
+$light: $gray-100;
+$dark: $gray-900;
+
+// $gray-100: #ebebf7;
+// $gray-300: #d6dbeb;
+// $gray-500: #b2b8c7;
+// $gray-700: #2e3037;
+// $gray-900: #080b33;
+
+// $primary: #132275;
+// $light-main: lighten($primary, 30%);
+
+// $danger: #e64670;
+// $success: #00adcc;
+// $warning: #ffe07d;
+
+// $opacity-animation-duration: 800ms;
+// $transform-animation-duration: 600ms;
+
+// .animate {
+// 	-webkit-transition: opacity $opacity-animation-duration ease-out, transform $transform-animation-duration ease-out;
+// 	-moz-transition: opacity $opacity-animation-duration ease-out, transform $transform-animation-duration ease-out;
+// 	-ms-transition: opacity $opacity-animation-duration ease-out, transform $transform-animation-duration ease-out;
+// 	-o-transition: opacity $opacity-animation-duration ease-out, transform $transform-animation-duration ease-out;
+// 	transition: opacity $opacity-animation-duration ease-out, transform $transform-animation-duration ease-out;
+// }
+
+// //@import "doe-na-nova-reset";
+// //@import "doe-na-nova-navbar";
+
+#doenanova-wrap {
+	padding: 30px 10px;
+	margin: 0 auto;
+	max-width: 500px;
+
+	//.animate;
+	position: relative;
+
+	//@import "doe-na-nova-framework";
+
+	.doenanova-page-title {
+		margin-bottom: 20px;
+	}
+
+	h3.empty-notification {
+		padding: 30px 50px 0;
+	}
+	h5.empty-notification {
+		padding: 20px 50px 30px;
+	}
+
+	// TEST MODE TAG
+	.stripe_is_test_mode {
+		position: absolute;
+		top: 5px;
+		right: 10px;
+	}
+
+	.doenanova-how-to-use {
+		position: absolute;
+		top: 23px;
+		right: 10px;
+	}
+
+	//REPORT
+	.doenanova-report {
+		position: absolute;
+		top: 0;
+		left: 10px;
+	}
+
+	#doenanova-report,
+	#doenanova-how-to-use {
+		display: none;
+		position: absolute;
+		top: 0;
+		bottom: -10px;
+		left: 0;
+		right: 0;
+		padding: 30px 10px;
+		background: #fff;
+
+		.doenanova-report-close,
+		.doenanova-how-to-use {
+			position: absolute;
+			top: 0px;
+			left: 10px;
+		}
+	}
+
+	// DONATION FORM
+	#form-doar {
+		#amount_wrap {
+			text-align: center;
+			padding: 20px 0;
+
+			span {
+				vertical-align: middle;
+			}
+
+			.currency {
+				color: $gray-300;
+				display: inline-block;
+				font-size: 20px;
+			}
+
+			.amount_width_container {
+				width: 100px;
+				min-width: 100px;
+				display: inline-block;
+
+				#amount {
+					display: inline-block;
+					margin: 0 auto;
+					font-size: 40px;
+					line-height: 1.1em;
+					height: auto;
+					padding: 0;
+					text-align: center;
+					background: none;
+					width: 100%;
+					border-width: 0px;
+					border-bottom: 2px solid $gray-300;
+					border-radius: 0;
+					-webkit-transition: all 100ms ease-in-out;
+					-moz-transition: all 100ms ease-in-out;
+					-ms-transition: all 100ms ease-in-out;
+					-o-transition: all 100ms ease-in-out;
+					transition: all 100ms ease-in-out;
+
+					&:focus {
+						outline: none;
+						box-shadow: none;
+						border-bottom-color: $primary;
+						-webkit-transition: all 100ms ease-in-out;
+						-moz-transition: all 100ms ease-in-out;
+						-ms-transition: all 100ms ease-in-out;
+						-o-transition: all 100ms ease-in-out;
+						transition: all 100ms ease-in-out;
+					}
+				}
+			}
+
+			.cents {
+				color: $gray-300;
+				font-size: 20px;
+				display: inline-block;
+			}
+		}
+
+		.cartoes-salvos {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+
+			border: 1px solid $gray-300;
+			border-radius: 50px;
+			overflow: auto;
+			padding: 5px;
+			margin-bottom: 5px;
+
+			.cartoes-salvos-last-4 {
+				margin-left: 10px;
+				pointer-events: none;
+			}
+
+			.doenanova-btn {
+			}
+		}
+	}
+	// DONATION FORM
+
+	//RECURRING DONATIONS PAGE
+	#doacoes-recorrentes {
+		.dropdown-menu-div {
+			display: none;
+			background: $gray-100;
+			padding: 20px;
+			border-bottom-right-radius: 30px;
+			border-bottom-left-radius: 30px;
+			margin-bottom: 10px;
+
+			&.is-active {
+				display: flex;
+				flex-direction: column;
+			}
+		}
+	}
+
+	//AJAX
+	#loadmore_recurring_donations-btn_container {
+		text-align: center;
+		margin-top: 10px;
+		margin-bottom: 30px;
+	}
+	.loadmore_recurring_donations-message {
+		display: none;
+		text-align: center;
+	}
+
+	.delete_recurring_donation-message {
+		display: none;
+		text-align: center;
+	}
+	//AJAX
+
+	//RECURRING DONATIONS PAGE
+
+	//RECENT TRANSACTIONS PAGE
+	#transacoes-recentes,
+	#doacoes-recorrentes {
+		.level {
+			margin: -1px 0;
+			padding: 10px 0px;
+
+			&:first-of-type {
+				border-top: none;
+			}
+
+			&:last-of-type {
+				margin-bottom: 20px;
+			}
+
+			.level-item {
+				.recent_transactions_date {
+					text-align: center;
+					margin-right: 10px;
+					color: $gray-500;
+
+					.heading {
+						margin: 0;
+					}
+				}
+
+				&.recent_transactions_purpose_frequency {
+					flex-grow: 1;
+					flex-shrink: 1;
+					justify-content: left;
+					margin-right: 10px;
+
+					.heading {
+						margin: 0;
+						line-height: 1;
+					}
+				}
+				.recent_transactions_last4 {
+					margin-right: 10px;
+					font-size: 12px;
+					color: $gray-500;
+				}
+				.recent_transactions_amount {
+					text-align: right;
+				}
+				.recent_transactions_status {
+					margin-left: 5px;
+				}
+			}
+
+			&.Succeeded {
+			}
+			&.Pending {
+			}
+			&.Failed {
+				.recent_transactions_purpose_frequency,
+				.recent_transactions_amount {
+					text-decoration: line-through;
+					color: $gray-300;
+				}
+			}
+		}
+	}
+
+	//AJAX
+	#loadmore_recent_transactions-btn_container {
+		text-align: center;
+		margin-bottom: 30px;
+	}
+	.loadmore_recent_transactions-message {
+		display: none;
+		text-align: center;
+	}
+	//AJAX
+
+	//RECENT TRANSACTIONS PAGE
+
+	//SAVED CARDS PAGE
+	#cartoes-salvos {
+		.credit-card {
+			background: $gray-300;
+
+			/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f6f8f9+0,e5ebee+50,d7dee3+51,f5f7f9+100;White+Gloss */
+			background: #f6f8f9; /* Old browsers */
+			background: -moz-linear-gradient(
+				top,
+				$gray-100 0%,
+				$gray-300 50%,
+				$gray-500 51%,
+				$gray-100 100%
+			); /* FF3.6-15 */
+			background: -webkit-linear-gradient(
+				top,
+				$gray-100 0%,
+				$gray-300 50%,
+				$gray-500 51%,
+				$gray-100 100%
+			); /* Chrome10-25,Safari5.1-6 */
+			background: linear-gradient(
+				to bottom,
+				$gray-100 0%,
+				$gray-300 50%,
+				$gray-500 51%,
+				$gray-100 100%
+			); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr=$gray-100, endColorstr=$gray-100,GradientType=0 ); /* IE6-9 */
+
+			border-radius: 8px;
+			padding: 20px 30px;
+			margin: 20px auto;
+			max-width: 320px;
+
+			.cc-funding {
+				float: left;
+				color: $gray-900;
+				text-transform: uppercase;
+				letter-spacing: 1px;
+				font-size: 10px;
+				margin-top: 6px;
+			}
+			.cc-brand {
+				text-align: right;
+			}
+			.cc-number {
+				font-family: monospace !important;
+				text-align: center;
+				font-size: 20px;
+				margin: 40px 0 10px;
+				text-shadow: 0px -1px #fff;
+				color: $gray-700;
+			}
+			.cc-name {
+				font-family: monospace !important;
+				float: left;
+				font-size: 10px;
+
+				small {
+					color: $gray-900;
+					text-transform: uppercase;
+					letter-spacing: 1px;
+					font-size: 8px;
+				}
+			}
+			.cc-exp {
+				font-family: monospace !important;
+				float: right;
+				font-size: 10px;
+				text-align: right;
+
+				small {
+					color: $gray-900;
+					text-transform: uppercase;
+					letter-spacing: 1px;
+					font-size: 8px;
+				}
+			}
+		}
+
+		#delete_card {
+			display: flex;
+			justify-content: center;
+		}
+	}
+	//SAVED CARDS PAGE
+
+	//DONATION RESULT PAGE
+	#resultado-doacao {
+		.resultado-doacao-header {
+			text-align: center;
+
+			img {
+				border-radius: 200px;
+				width: 100px;
+				height: 101px;
+				margin: 10px auto;
+				display: block;
+			}
+			h3 {
+				margin: 0;
+			}
+			h5 {
+				margin: 0;
+			}
+
+			.notification {
+			}
+		}
+
+		.resultado-doacao-footer {
+			text-align: center;
+
+			.doenanova-btn {
+				margin-bottom: 20px;
+			}
+
+			small {
+			}
+		}
+	}
+	//DONATION RESULT PAGE
+
+	//LOGIN & REGISTER LINKS
+	.login_register {
+		padding: 50px 0;
+		margin: 0 auto;
+		max-width: 240px;
+		text-align: center;
+
+		p {
+		}
+
+		.doenanova-btn {
+			margin-top: 10px;
+		}
+	}
+}
+//#doenanova-wrap
+
+#doe-na-nova-nav {
+	ul {
+		li {
+			a {
+				font-size: 0.8em;
+
+				svg {
+					margin-right: 5px;
+				}
+			}
+			@media only screen and (max-width: 460px) {
+				a {
+					font-size: 1em;
+
+					span {
+						display: none;
+					}
+				}
+			}
+		}
+	}
+}
+
+#cartoes {
+	// Cartões salvos > Cartão de crédito
+	.card {
+		height: 180px;
+		//width: 350px;
+		padding: 20px;
+		background-color: #fff;
+		border-radius: 14px;
+		position: relative;
+		color: #fff;
+		background-image: url(https://i.imgur.com/5rm6bLu.jpg);
+		z-index: 5;
+		background-size: cover;
+		opacity: 1;
+		border: none;
+	}
+
+	.card::before {
+		height: 100%;
+		width: 100%;
+		position: absolute;
+		content: "";
+		bottom: 0;
+		top: 0;
+		right: 0;
+		left: 0;
+		border-radius: 14px;
+		background: $primary;
+		background: linear-gradient(90deg, $primary 0%, $danger 100%);
+		opacity: 0.8;
+	}
+
+	.card::after {
+		height: 100%;
+		width: 100%;
+		position: absolute;
+		content: "";
+		bottom: 0;
+		top: 0;
+		right: 0;
+		left: 0;
+		border-radius: 14px;
+		background: $primary;
+		background: linear-gradient(90deg, $primary 0%, $danger 100%);
+		clip-path: polygon(28% 13%, 48% 45%, 75% 63%, 100% 99%, 0 100%, 0% 60%, 0 0);
+	}
+
+	.upper {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		z-index: 1;
+	}
+
+	.upper h6 {
+		font-size: 18px;
+	}
+
+	.upper h4 {
+		font-size: 15px;
+		text-transform: uppercase;
+	}
+
+	.lower {
+		position: absolute;
+		bottom: 20px;
+		z-index: 1;
+	}
+}
+
+#transacoes {
+	@media only screen and (max-width: 460px) {
+		font-size: 0.8em;
+	}
+
+	table {
+		tbody {
+			tr {
+				td {
+				}
+			}
+		}
+	}
+}

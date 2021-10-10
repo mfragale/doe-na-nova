@@ -1,0 +1,36 @@
+{
+  "name": "theme-kit",
+  "version": "1.0.1",
+  "description": "A starter project to build your own Bootstrap themes",
+  "repository": "https://github.com/HackerThemes/theme-kit",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "bootstrap",
+    "themes"
+  ],
+  "author": "Alexander Rechsteiner",
+  "license": "MIT",
+  "dependencies": {
+    "bootstrap": "^4.5.0",
+    "is-obj": "^2.0.0",
+    "jquery": "^3.5.1",
+    "popper.js": "^1.16.1"
+  },
+  "devDependencies": {
+    "autoprefixer": "^9.8.6",
+    "browser-sync": "^2.26.13",
+    "connect-livereload": "^0.6.1",
+    "gulp": "^4.0.2",
+    "gulp-clean-css": "^4.3.0",
+    "gulp-livereload": "^4.0.2",
+    "gulp-minify": "^3.1.0",
+    "gulp-postcss": "^8.0.0",
+    "gulp-rename": "^1.4.0",
+    "gulp-sass": "^4.1.0",
+    "gulp-scss-lint": "^1.0.0",
+    "gulp-sourcemaps": "^2.6.5"
+  }
+}

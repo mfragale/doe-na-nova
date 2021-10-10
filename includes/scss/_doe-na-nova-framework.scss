@@ -1,0 +1,622 @@
+//The framework elements are based on https://bulma.io/documentation
+
+//TITLES
+h1 {
+  font-size: 48px;
+  line-height: 54px;
+}
+h2 {
+  font-size: 40px;
+  line-height: 44px;
+}
+h3 {
+  font-size: 30px;
+  line-height: 36px;
+}
+
+//COLUMNS
+.doenanova-columns {
+  display: flex;
+  align-items: center;
+
+  .doenanova-column {
+    display: block;
+    flex-basis: 0;
+    flex-grow: 1;
+    flex-shrink: 1;
+    padding: 5px 0;
+    padding-right: 5px;
+
+    &:last-child {
+      padding-right: 0;
+    }
+  }
+}
+
+//FORM ELEMENTS
+.focus-box-shadow {
+  box-shadow: 0px 0px 0px 3px fadeout($main-color, 85%);
+}
+
+.doenanova-select {
+  position: relative;
+  display: block;
+
+  label {
+    position: absolute;
+    font-size: 10px;
+    background: #fff;
+    border-radius: 10px;
+    top: -5px;
+    left: 5px;
+    padding: 1px 10px 3px 5px;
+    color: $medium-gray;
+  }
+
+  select {
+    /* Reset Select */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    appearance: none;
+    outline: 0;
+    box-shadow: none;
+    border: 0;
+    background: #fff;
+    background-image: none;
+    width: 100%;
+
+    /* Custom Select */
+    height: 47px;
+    margin: 0;
+    padding: 0 50px 0 1em;
+    color: #2e3037;
+    font-weight: 500;
+    cursor: pointer;
+    border: 1px solid #dcdfe5;
+    border-radius: 50px;
+    font-size: 10px;
+    line-height: 12px;
+    font-weight: normal;
+    white-space: pre-wrap;
+
+    &:active,
+    &:focus {
+      border-color: $main-color;
+      outline: none;
+      //.focus-box-shadow;
+    }
+  }
+
+  /* Arrow */
+  &:after {
+    content: "\25BC";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 35px;
+    height: 35px;
+    text-align: center;
+    padding: 0;
+    background: #ffffff;
+    pointer-events: none;
+    border: 1px solid $light-gray;
+    border-radius: 50px;
+    margin: 6px;
+    color: $medium-gray;
+    line-height: 35px;
+    font-size: 12px;
+  }
+}
+
+.field {
+  position: relative;
+
+  label {
+    position: absolute;
+    font-size: 10px;
+    background: #fff;
+    border-radius: 10px;
+    top: -5px;
+    left: 5px;
+    padding: 1px 10px 3px 5px;
+    color: $medium-gray;
+  }
+
+  .doenanova-input {
+    background: #fff;
+    border: 1px solid $light-gray;
+    border-radius: 50px;
+    font-size: 14px;
+    line-height: 16px;
+    padding: 10px;
+    height: 45px;
+    margin-bottom: 5px;
+    width: 100%;
+    display: block;
+    color: $off-black;
+    font-weight: 500;
+
+    &::placeholder {
+      color: $medium-gray;
+    }
+
+    &:focus,
+    &.StripeElement--focus {
+      border-color: $main-color;
+      outline: none;
+      //.focus-box-shadow;
+    }
+  }
+}
+
+form.was-validated {
+  input:invalid,
+  .StripeElement--invalid {
+    border-color: $danger !important;
+  }
+}
+
+//BUTTONS
+.doenanova-btn {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  align-items: center;
+  border: 1px solid $main-color;
+  border-radius: 50px;
+  box-shadow: 0 5px 10px -4px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+  display: inline-flex;
+  justify-content: flex-start;
+  text-align: center;
+  position: relative;
+  vertical-align: top;
+  height: unset;
+  padding: 11px;
+  font-size: 18px;
+  white-space: nowrap;
+
+  background: $main-color;
+  /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#1a61ad+0,132275+100 */
+  background: $main-color; /* Old browsers */
+  background: -moz-linear-gradient(-45deg, lighten($main-color, 15%) 0%, $main-color 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(
+    -45deg,
+    lighten($main-color, 15%) 0%,
+    $main-color 100%
+  ); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(
+    135deg,
+    lighten($main-color, 15%) 0%,
+    $main-color 100%
+  ); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+
+  color: $light-gray;
+  font-weight: bolder;
+
+  &.doenanova-btn-sm {
+    padding: 10px 5px;
+    font-size: 13px;
+    box-shadow: none;
+  }
+  &.doenanova-btn-xs {
+    padding: 8px;
+    font-size: 10px;
+    box-shadow: none;
+  }
+
+  &.doenanova-btn-block {
+    display: block;
+    width: 100%;
+  }
+
+  &:hover {
+    color: #fff;
+  }
+
+  &:focus {
+    border-color: $off-black;
+    outline: none;
+    //.focus-box-shadow;
+  }
+
+  &.is-light {
+    background: #fff;
+    color: $medium-gray;
+    border-color: $light-gray;
+  }
+
+  &.is-danger {
+    background: $danger;
+    color: #fff;
+    border-color: $danger;
+  }
+
+  &.is-success {
+    background: $success;
+    color: #fff;
+    border-color: $success;
+  }
+
+  .svg-inline--fa {
+    //position: relative;
+    //top: -1px;
+    margin: 0 5px;
+  }
+
+  &.loading {
+    //background: #f30 !important;
+  }
+
+  &[disabled] {
+    cursor: not-allowed;
+    pointer-events: none;
+    background: $off-white;
+    color: $light-gray;
+    border-color: $light-gray;
+    box-shadow: none;
+  }
+}
+
+.doenanova-buttons {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+.doenanova-buttons.is-centered {
+  justify-content: center;
+}
+
+//ICONS
+.svg-inline--fa {
+  vertical-align: middle;
+
+  &.is-success {
+    color: $success;
+  }
+
+  &.is-warning {
+    color: $warning;
+  }
+
+  &.is-danger {
+    color: $danger;
+  }
+}
+
+//NOTIFICATIONS
+.notification {
+  background-color: $off-white;
+  border-radius: 4px;
+  padding: 1.25rem 2.5rem 1.25rem 1.5rem;
+  position: relative;
+  margin: 10px 0;
+
+  &.is-danger {
+    background-color: $danger;
+    color: #fff;
+  }
+  &.is-success {
+    background-color: $success;
+    color: #fff;
+  }
+  &.is-warning {
+    background-color: $warning;
+    color: #fff;
+  }
+}
+
+//LEVEL
+.level {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 20px 10px;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+  padding: 20px 10px;
+
+  .level-item {
+    align-items: center;
+    display: flex;
+    flex-basis: auto;
+    flex-grow: 0;
+    flex-shrink: 0;
+    justify-content: center;
+
+    .heading {
+      display: block;
+      font-size: 10px;
+      letter-spacing: 1px;
+      margin: 0 0 5px;
+      text-transform: uppercase;
+    }
+    .title {
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 1.125;
+      margin: 0;
+    }
+  }
+
+  .level-left,
+  .level-right {
+    flex-basis: auto;
+    flex-grow: 0;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+  }
+  .level-left {
+    justify-content: flex-start;
+  }
+  .level-right {
+    justify-content: flex-end;
+  }
+}
+
+//TAG
+.tag {
+  align-items: center;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+  color: #4a4a4a;
+  display: inline-flex;
+  font-size: 0.65rem;
+  height: 1.3em;
+  justify-content: center;
+  line-height: 1;
+  padding-left: 0.2em;
+  padding-right: 0.2em;
+  white-space: nowrap;
+
+  &.is-success {
+    background-color: $success;
+    color: #fff;
+  }
+
+  &.is-warning {
+    background-color: $warning;
+    color: $off-black;
+  }
+
+  &.is-danger {
+    background-color: $danger;
+    color: #fff;
+  }
+}
+
+//MODAL
+.doenanova-modal-close {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  background-color: rgba(10, 10, 10, 0.2);
+  border: none;
+  border-radius: 290486px;
+  cursor: pointer;
+  pointer-events: auto;
+  display: inline-block;
+  flex-grow: 0;
+  flex-shrink: 0;
+  font-size: 0;
+  height: 20px;
+  width: 20px;
+  outline: none;
+  position: relative;
+  vertical-align: top;
+
+  &::before,
+  &::after {
+    background-color: white;
+    content: "";
+    display: block;
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    -webkit-transform: translateX(-50%) translateY(-50%) rotate(45deg);
+    transform: translateX(-50%) translateY(-50%) rotate(45deg);
+    -webkit-transform-origin: center center;
+    transform-origin: center center;
+  }
+
+  &::before {
+    height: 2px;
+    width: 50%;
+  }
+
+  &::after {
+    height: 50%;
+    width: 2px;
+  }
+}
+
+.doenanova-modal,
+.doenanova-modal-background {
+  bottom: -15px;
+  left: -10px;
+  position: absolute;
+  right: -10px;
+  top: -10px;
+}
+
+.doenanova-modal {
+  align-items: center;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+  position: fixed;
+  z-index: 40;
+}
+
+.doenanova-modal.is-active {
+  display: flex;
+}
+
+.doenanova-modal-background {
+  background-color: #fff;
+}
+
+.doenanova-modal-content,
+.doenanova-modal-card {
+  margin: 0 10px;
+  max-height: 80%;
+  width: 90%;
+  overflow: auto;
+  position: relative;
+  border-radius: 6px;
+}
+
+.doenanova-modal-card {
+  display: flex;
+  flex-direction: column;
+  max-height: 80%;
+  overflow: hidden;
+  -ms-overflow-y: visible;
+
+  box-shadow: 0 5px 10px -4px rgba(0, 0, 0, 0.5);
+}
+
+.doenanova-modal-card-head,
+.doenanova-modal-card-foot {
+  align-items: center;
+  background-color: whitesmoke;
+  display: flex;
+  flex-shrink: 0;
+  justify-content: flex-start;
+  padding: 5px 10px;
+  position: relative;
+}
+
+.doenanova-modal-card-head {
+  border-bottom: 1px solid #dbdbdb;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+}
+
+.doenanova-modal-card-title {
+  color: #363636;
+  flex-grow: 1;
+  flex-shrink: 0;
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.doenanova-modal-card-foot {
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+  border-top: 1px solid #dbdbdb;
+}
+
+.doenanova-modal-card-foot .button:not(:last-child) {
+  margin-right: 10px;
+}
+
+.doenanova-modal-card-body {
+  -webkit-overflow-scrolling: touch;
+  background-color: white;
+  flex-grow: 1;
+  flex-shrink: 1;
+  overflow: auto;
+  padding: 10px;
+}
+
+//DROPDOWN
+/*
+.dropdown {
+  display: inline-flex;
+  position: relative;
+  vertical-align: top;
+}
+
+.dropdown.is-active .dropdown-menu, .dropdown.is-hoverable:hover .dropdown-menu {
+  display: block;
+}
+
+.dropdown.is-right .dropdown-menu {
+  left: auto;
+  right: 0;
+}
+
+.dropdown.is-up .dropdown-menu {
+  bottom: 100%;
+  padding-bottom: 4px;
+  padding-top: initial;
+  top: auto;
+}
+
+.dropdown-menu {
+  display: none;
+  left: 0;
+  min-width: 12rem;
+  padding-top: 4px;
+  position: absolute;
+  top: 100%;
+  z-index: 20;
+}
+
+.dropdown-content {
+  background-color: white;
+  border-radius: 4px;
+  box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.1);
+  padding-bottom: 0.5rem;
+  padding-top: 0.5rem;
+}
+
+.dropdown-item {
+  color: #4a4a4a;
+  display: block;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  padding: 0.375rem 1rem;
+  position: relative;
+}
+
+a.dropdown-item,
+button.dropdown-item {
+  padding-right: 3rem;
+  text-align: left;
+  white-space: nowrap;
+  width: 100%;
+}
+
+a.dropdown-item:hover,
+button.dropdown-item:hover {
+  background-color: whitesmoke;
+  color: #0a0a0a;
+}
+
+a.dropdown-item.is-active,
+button.dropdown-item.is-active {
+  background-color: #3273dc;
+  color: #fff;
+}
+
+.dropdown-divider {
+  background-color: #dbdbdb;
+  border: none;
+  display: block;
+  height: 1px;
+  margin: 0.5rem 0;
+}
+*/
+
+//CLEARFIX
+.is-clearfix::after {
+  clear: both;
+  content: " ";
+  display: table;
+}

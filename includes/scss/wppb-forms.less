@@ -1,0 +1,242 @@
+/*
+ * WPPB - Profile Builder
+*/
+
+//ALERTS
+#wppb_form_general_message, .wppb-alert, #wppb_register_pre_form_message, p.wppb-error {
+	max-width: 320px;
+	margin: 0 auto;
+	text-align: center;
+	font-size: 14px;
+	color: #6f6794;
+	background: #f9f8ff;
+	padding: 10px;
+	
+	img {
+		display: none;
+	}
+}
+
+
+
+//STRUCTURE
+.doenanova_wppb_1 {
+	max-width: 320px;
+  margin: 0 auto;
+}
+.doenanova_wppb_ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+.doenanova_wppb_li {
+	margin: 10px 0;
+}
+.doenanova_wppb_label {
+	display: block;
+	font-size: 12px;
+	margin: 5px 10px;
+}
+.doenanova_wppb_input {
+  display: block;
+  border-radius: 50px;
+  border: 1px solid #dfdfe0;
+  padding: 10px 15px;
+  width: 100%;
+  font-size: 16px;
+  
+  &:focus {
+    outline: none;
+    border-color: #bbb;
+  }
+}
+.doenanova_wppb_description-delimiter {
+  font-size: 10px;
+  text-align: center;
+  display: block;
+  margin-bottom: 20px;
+}
+.doenanova_wppb_button {
+	display: block;
+  width: 100%;
+  border: none;
+  background: #efeff3;
+  padding: 15px;
+  font-size: 16px;
+  border-radius: 500px;
+  
+  &:hover {
+    background: #c9cdda;
+    cursor: pointer;
+  }
+  
+  &:focus {
+    outline: none;
+    background: #c9cdda;
+  }
+  
+  &:active {
+    background: #aeb4c7;
+  }
+}
+.doenanova_wppb_img {
+	display: none;
+}
+.doenanova_wppb_form_error {
+	text-align: center;
+  font-size: 10px;
+  color: #b11034;
+  background: #fdf6f6;
+  margin: 0 20px 20px;
+  padding: 10px;
+  display: block;
+}
+
+
+
+//LOGIN FORM
+form#loginform {
+	.doenanova_wppb_1;
+
+	p.login-username, p.login-password {
+		.doenanova_wppb_li;
+		
+		label {
+			.doenanova_wppb_label;
+		}
+		
+		input {
+			.doenanova_wppb_input;
+		}
+	}
+	
+	p.login-remember {
+    text-align: center;
+    font-size: 12px;
+		
+		label {
+			
+		}
+		
+		input {
+			
+		}
+	}
+	
+	p.login-submit {
+		
+		input.button {
+			.doenanova_wppb_button;
+		}
+	}
+}
+
+
+
+
+//REGISTER FORM
+form#wppb-register-user {
+	.doenanova_wppb_1;
+	
+	ul {
+		.doenanova_wppb_ul;
+		
+		li.wppb-form-field {
+			.doenanova_wppb_li;
+			
+			label {
+				.doenanova_wppb_label;
+				
+				span {
+					
+				}
+				
+				img {
+					.doenanova_wppb_img;
+				}
+			}
+			
+			input {
+				.doenanova_wppb_input;
+			}
+			
+			span.wppb-description-delimiter {
+				.doenanova_wppb_description-delimiter;
+			}
+			
+			span.wppb-form-error {
+				.doenanova_wppb_form_error;
+			}
+		}
+	}
+	
+	p.form-submit {
+		
+		input.button {
+			.doenanova_wppb_button;
+		}
+	}
+}
+
+
+
+//EDIT PROFILE FORM
+form#select_user_to_edit_form {
+	.doenanova_wppb_1;
+  
+  .select2-container {
+    width: 100% !important;
+    margin-top: 10px;
+	}
+}
+
+form#wppb-edit-user {
+	.doenanova_wppb_1;
+  
+  ul {
+	  .doenanova_wppb_ul;
+	  
+	  li.wppb-form-field {
+		  .doenanova_wppb_li;
+		  
+		  label {
+			  .doenanova_wppb_label;
+			  
+			  span.wppb-required {
+				  
+			  }
+			  
+			  img {
+					.doenanova_wppb_img;
+				}
+		  }
+		  
+		  input.text-input {
+			  .doenanova_wppb_input;
+		  }
+		  
+		  span.wppb-description-delimiter {
+			  .doenanova_wppb_description-delimiter;
+		  }
+		  
+		  span.wppb-form-error {
+				.doenanova_wppb_form_error;
+			}
+			
+			&.wppb-default-username {
+				color: #ccc;
+				
+				input[disabled="disabled"] {
+					color: #ccc;
+				}
+			}
+	  }
+  }
+  
+  p.form-submit {
+		
+		input.button {
+			.doenanova_wppb_button;
+		}
+	}
+}
