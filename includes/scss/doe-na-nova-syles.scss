@@ -21,42 +21,12 @@ $danger: #ff694c;
 $light: $gray-100;
 $dark: $gray-900;
 
-// $gray-100: #ebebf7;
-// $gray-300: #d6dbeb;
-// $gray-500: #b2b8c7;
-// $gray-700: #2e3037;
-// $gray-900: #080b33;
-
-// $primary: #132275;
-// $light-main: lighten($primary, 30%);
-
-// $danger: #e64670;
-// $success: #00adcc;
-// $warning: #ffe07d;
-
-// $opacity-animation-duration: 800ms;
-// $transform-animation-duration: 600ms;
-
-// .animate {
-// 	-webkit-transition: opacity $opacity-animation-duration ease-out, transform $transform-animation-duration ease-out;
-// 	-moz-transition: opacity $opacity-animation-duration ease-out, transform $transform-animation-duration ease-out;
-// 	-ms-transition: opacity $opacity-animation-duration ease-out, transform $transform-animation-duration ease-out;
-// 	-o-transition: opacity $opacity-animation-duration ease-out, transform $transform-animation-duration ease-out;
-// 	transition: opacity $opacity-animation-duration ease-out, transform $transform-animation-duration ease-out;
-// }
-
-// //@import "doe-na-nova-reset";
-// //@import "doe-na-nova-navbar";
-
 #doenanova-wrap {
 	padding: 30px 10px;
 	margin: 0 auto;
 	max-width: 500px;
 
-	//.animate;
 	position: relative;
-
-	//@import "doe-na-nova-framework";
 
 	.doenanova-page-title {
 		margin-bottom: 20px;
@@ -112,7 +82,7 @@ $dark: $gray-900;
 	#form-doar {
 		#amount_wrap {
 			text-align: center;
-			padding: 20px 0;
+			//padding: 20px 0;
 
 			span {
 				vertical-align: middle;
@@ -169,19 +139,7 @@ $dark: $gray-900;
 		}
 
 		.cartoes-salvos {
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
-
-			border: 1px solid $gray-300;
-			border-radius: 50px;
-			overflow: auto;
-			padding: 5px;
-			margin-bottom: 5px;
-
 			.cartoes-salvos-last-4 {
-				margin-left: 10px;
-				pointer-events: none;
 			}
 
 			.doenanova-btn {
@@ -470,17 +428,17 @@ $dark: $gray-900;
 #cartoes {
 	// Cartões salvos > Cartão de crédito
 	.card {
-		height: 180px;
-		//width: 350px;
+		//height: 180px;
+		max-width: 300px;
 		padding: 20px;
-		background-color: #fff;
+		// background-color: #fff;
 		border-radius: 14px;
-		position: relative;
+		//position: relative;
 		color: #fff;
-		background-image: url(https://i.imgur.com/5rm6bLu.jpg);
-		z-index: 5;
-		background-size: cover;
-		opacity: 1;
+		//background-image: url(https://i.imgur.com/5rm6bLu.jpg);
+		//z-index: 5;
+		//background-size: cover;
+		// opacity: 1;
 		border: none;
 	}
 
@@ -488,6 +446,7 @@ $dark: $gray-900;
 		height: 100%;
 		width: 100%;
 		position: absolute;
+		z-index: 0;
 		content: "";
 		bottom: 0;
 		top: 0;
@@ -503,6 +462,7 @@ $dark: $gray-900;
 		height: 100%;
 		width: 100%;
 		position: absolute;
+		z-index: 0;
 		content: "";
 		bottom: 0;
 		top: 0;
@@ -515,9 +475,12 @@ $dark: $gray-900;
 	}
 
 	.upper {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
+		//display: flex;
+		//justify-content: space-between;
+		//align-items: center;
+		//z-index: 1;
+
+		position: relative;
 		z-index: 1;
 	}
 
@@ -531,9 +494,11 @@ $dark: $gray-900;
 	}
 
 	.lower {
-		position: absolute;
-		bottom: 20px;
+		position: relative;
 		z-index: 1;
+		//position: absolute;
+		//bottom: 20px;
+		//z-index: 1;
 	}
 }
 

@@ -74,7 +74,7 @@
 									<div><?php echo $subscription->metadata->Purpose; ?></div>
 									<div><small><?php echo $subscription_interval; ?></small></div>
 								</div>
-								<div class="col">
+								<div class="col text-end me-3">
 									<?php echo doe_na_nova_currency_symbol(); ?><?php echo $subscription->plan->amount / 100; ?>.00
 								</div>
 							</button>

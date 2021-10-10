@@ -74,9 +74,11 @@
 					<span class="cents">,00</span>
 				</div> -->
 
-				<div class="input-group mb-2">
+				<div id="amount_wrap" class="input-group mb-2 d-flex justify-content-center">
 					<span class="input-group-text"><?php echo doe_na_nova_currency_symbol(); ?></span>
-					<input type="number" name="amount" class="amount form-control" id="amount" placeholder="0" required autofocus autocomplete="off">
+					<span class="amount_width_container">
+						<input type="number" name="amount" class="amount form-control" id="amount" placeholder="0" required autofocus autocomplete="off">
+					</span>
 					<span class="input-group-text">,00</span>
 				</div>
 				<!-- ********** AMOUNT ********** -->

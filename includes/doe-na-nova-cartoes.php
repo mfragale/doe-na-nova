@@ -48,11 +48,18 @@
 
 						<div class="card">
 							<div class="upper">
-								<h6><?php echo $card->funding; ?></h6>
-								<h4><i class="fab fa-2x fa-cc-<?php echo strtolower($card->brand); ?>"></i></h4>
+								<div class="d-flex justify-content-between">
+									<h6><?php echo $card->funding; ?></h6>
+									<h4><i class="fab fa-2x fa-cc-<?php echo strtolower($card->brand); ?>"></i></h4>
+								</div>
 							</div>
 							<div class="lower">
-								<h5><?php echo $card->name; ?></h5> <span>•••• •••• •••• <?php echo $card->last4; ?></span> <span><?php echo $card->exp_month; ?>/<?php echo $card->exp_year; ?></span>
+								<h5><?php echo $card->name; ?></h5>
+								<div class="d-flex justify-content-between">
+									<div>•••• •••• •••• <?php echo $card->last4; ?></div>
+									<div><?php echo $card->exp_month; ?>/<?php echo $card->exp_year; ?></div>
+								</div>
+
 							</div>
 						</div>
 
