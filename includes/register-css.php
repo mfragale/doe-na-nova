@@ -14,10 +14,10 @@ function doe_na_nova_form_css()
 		'1.1'
 	);
 
-	wp_register_style(
-		'wppb-forms',
-		plugin_dir_url(__FILE__) . 'scss/wppb-forms.min.css',
-		null,
-		'1.1'
-	);
+	// wp_register_style(
+	// 	'wppb-forms',
+	// 	plugin_dir_url(__FILE__) . 'scss/dist/wppb-forms-min.css',
+	// 	null,
+	// 	'1.1'
+	// );
 }

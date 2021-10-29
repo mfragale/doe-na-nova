@@ -14,11 +14,6 @@ function doe_na_nova_form_js()
 		true
 	);
 
-	// wp_register_script(
-	// 	'font-awesome',
-	// 	'https://use.fontawesome.com/releases/v5.8.1/js/all.js'
-	// );
-
 	wp_register_script(
 		'functions-js',
 		plugin_dir_url(__FILE__) . 'js/dist/functions-min.js',
@@ -47,7 +42,8 @@ function doe_na_nova_form_js()
 
 	$js_vars = array(
 		'checkout-url' => admin_url('admin-ajax.php'),
-		'action-url' => admin_url('admin-post.php'),
+		'action_url' => admin_url('admin-post.php'),
+		'current_url' => get_permalink(),
 		'stripe-pk' => $stripe_publishable_key,
 		'wp-action-doenanova-load-more-charges' => 'doenanova_load_more_charges',
 		'wp-action-doenanova-load-more-doacoes-recorrentes' => 'doenanova_load_more_recurring_donations',

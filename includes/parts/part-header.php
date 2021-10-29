@@ -5,7 +5,9 @@ global $stripe_is_LIVE_mode;
 global $show_report;
 global $doenanova_options;
 
-\Stripe\Stripe::setApiKey($stripe_secret_key);
+$stripe = new \Stripe\StripeClient(
+		$stripe_secret_key
+	);
 
 if ( get_user_meta( get_current_user_id(), '_stripe_customer_LIVE_id', true ) && isset($stripe_is_LIVE_mode)) {
 	$customer_id = get_user_meta( get_current_user_id(), '_stripe_customer_LIVE_id', true );
@@ -14,7 +16,3 @@ if ( get_user_meta( get_current_user_id(), '_stripe_customer_LIVE_id', true ) &&
 } else {
 	$customer_id = false;
 }
-
-
-
-?>

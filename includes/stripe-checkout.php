@@ -18,7 +18,9 @@ function stripe_checkout()
 	//to retrive the API keys from admin page
 	global $doenanova_options;
 
-	\Stripe\Stripe::setApiKey($stripe_secret_key);
+	$stripe = new \Stripe\StripeClient(
+		$stripe_secret_key
+	);
 
 	$return_data = array();
 	$return_data["success"] = false;
@@ -50,11 +52,11 @@ function stripe_checkout()
 
 	if (!$customer_id) {
 		try {
-			$customer = \Stripe\Customer::create(array(
+			$customer = $stripe->customers->create([
 				'email' => $user_email,
 				'source' => $token,
 				'description' => $user_name,
-			));
+			]);
 
 			$customer_id = $customer->id;
 
@@ -63,7 +65,7 @@ function stripe_checkout()
 			} else if (isset($stripe_is_TEST_mode)) {
 				update_user_meta(get_current_user_id(), '_stripe_customer_TEST_id', $customer_id);
 			}
-		} catch (\Stripe\Error\Card $e) {
+		} catch (\Stripe\Exception\CardException $e) {
 			// Since it's a decline, \Stripe\Error\Card will be caught
 			$return_data["success"] = false;
 			$body = $e->getJsonBody();
@@ -80,61 +82,68 @@ function stripe_checkout()
 
 
 		//If the customer adds a card and then deletes it, he will have a $customer_id but no source
-		$source = \Stripe\Customer::retrieve($customer_id)->sources->all(array(
-			'object' => 'card'
-		));
+		$source = $stripe->customers->allSources(
+			$customer_id,
+			['object' => 'card']
+		);
 		if (!$source->data) {
-			$customer = \Stripe\Customer::retrieve($customer_id);
+			// $customer = $stripe->customers->retrieve(
+			// 	$customer_id,
+			// 	[]
+			// );
 
 			try {
-				$customer->sources->create(array("source" => $token));
-			} catch (\Stripe\Error\Card $e) {
+				$source = $stripe->customers->createSource(
+					$customer_id,
+					['source' => $token]
+				);
+			} catch (\Stripe\Exception\CardException $e) {
 				// Since it's a decline, \Stripe\Error\Card will be caught
 				$return_data["success"] = false;
 				$body = $e->getJsonBody();
 				$err  = $body['error'];
-				wp_redirect(home_url() . '' . doenanova_app_slug() . '' . $doenanova_options['page_donation_result'] . '?success=' . $return_data["success"] . '&message=' . urlencode($err["message"]) . '&customer_id=' . $customer_id . '');
+				wp_redirect(home_url() . '' . doenanova_app_slug() . '' . $doenanova_options['page_donation_result'] . '?message=' . urlencode($err["message"]) . '&customer_id=' . $customer_id . '');
 				exit;
 				die();
-			} catch (\Stripe\Error\RateLimit $e) {
+			} catch (\Stripe\Exception\RateLimitException $e) {
 				// Too many requests made to the API too quickly
 				$return_data["success"] = false;
 				$body = $e->getJsonBody();
 				$err  = $body['error'];
-				wp_redirect(home_url() . '' . doenanova_app_slug() . '' . $doenanova_options['page_donation_result'] . '?success=' . $return_data["success"] . '&message=' . urlencode($err["message"]) . '&customer_id=' . $customer_id . '');
+				wp_redirect(home_url() . '' . doenanova_app_slug() . '' . $doenanova_options['page_donation_result'] . '?message=' . urlencode($err["message"]) . '&customer_id=' . $customer_id . '');
 				exit;
 				die();
-			} catch (\Stripe\Error\InvalidRequest $e) {
+			} catch (\Stripe\Exception\InvalidRequestException $e) {
 				// Invalid parameters were supplied to Stripe's API
 				$return_data["success"] = false;
 				$body = $e->getJsonBody();
 				$err  = $body['error'];
-				wp_redirect(home_url() . '' . doenanova_app_slug() . '' . $doenanova_options['page_donation_result'] . '?success=' . $return_data["success"] . '&message=' . urlencode($err["message"]) . '&customer_id=' . $customer_id . '');
+				wp_redirect(home_url() . '' . doenanova_app_slug() . '' . $doenanova_options['page_donation_result'] . '?message=' . urlencode($err["message"]) . '&customer_id=' . $customer_id . '');
 				exit;
 				die();
-			} catch (\Stripe\Error\Authentication $e) {
+			} catch (\Stripe\Exception\AuthenticationException $e) {
 				// Authentication with Stripe's API failed
 				// (maybe you changed API keys recently)
 				$return_data["success"] = false;
 				$body = $e->getJsonBody();
 				$err  = $body['error'];
-				wp_redirect(home_url() . '' . doenanova_app_slug() . '' . $doenanova_options['page_donation_result'] . '?success=' . $return_data["success"] . '&message=' . urlencode($err["message"]) . '&customer_id=' . $customer_id . '');
+				wp_redirect(home_url() . '' . doenanova_app_slug() . '' . $doenanova_options['page_donation_result'] . '?message=' . urlencode($err["message"]) . '&customer_id=' . $customer_id . '');
 				exit;
 				die();
-			} catch (\Stripe\Error\ApiConnection $e) {
+			} catch (\Stripe\Exception\ApiConnectionException $e) {
 				// Network communication with Stripe failed
 				$return_data["success"] = false;
 				$body = $e->getJsonBody();
 				$err  = $body['error'];
-				wp_redirect(home_url() . '' . doenanova_app_slug() . '' . $doenanova_options['page_donation_result'] . '?success=' . $return_data["success"] . '&message=' . urlencode($err["message"]) . '&customer_id=' . $customer_id . '');
+				wp_redirect(home_url() . '' . doenanova_app_slug() . '' . $doenanova_options['page_donation_result'] . '?message=' . urlencode($err["message"]) . '&customer_id=' . $customer_id . '');
 				exit;
 				die();
-			} catch (\Stripe\Error\Base $e) {
+			} catch (\Stripe\Exception\ApiErrorException $e) {
 				// Display a very generic error to the user, and maybe send yourself an email
 				$return_data["success"] = false;
 				$body = $e->getJsonBody();
 				$err  = $body['error'];
-				wp_redirect(home_url() . '' . doenanova_app_slug() . '' . $doenanova_options['page_donation_result'] . '?success=' . $return_data["success"] . '&message=' . urlencode($err["message"]) . '&customer_id=' . $customer_id . '');
+				wp_redirect(home_url() . '' . doenanova_app_slug() . '' . $doenanova_options['page_donation_result'] . '?message=' . urlencode($err["message"]) . '&customer_id=' . $customer_id . '');
 				exit;
 				die();
 			} catch (Exception $e) {
@@ -142,7 +151,7 @@ function stripe_checkout()
 				$return_data["success"] = false;
 				$body = $e->getMessage();
 				$err  = $body['error'];
-				wp_redirect(home_url() . '' . doenanova_app_slug() . '' . $doenanova_options['page_donation_result'] . '?success=' . $return_data["success"] . '&message=' . urlencode($err["message"]) . '&customer_id=' . $customer_id . '');
+				wp_redirect(home_url() . '' . doenanova_app_slug() . '' . $doenanova_options['page_donation_result'] . '?message=' . urlencode($err["message"]) . '&customer_id=' . $customer_id . '');
 				exit;
 				die();
 			}
@@ -154,13 +163,14 @@ function stripe_checkout()
 
 			//ONE TIME DONATIONS
 			try {
-				$charge = \Stripe\Charge::create(array(
+				$charge = $stripe->charges->create([
 					"customer" => $customer_id,
 					"amount" => $amount * 100,
 					"currency" => $currency,
 					"receipt_email" => $user_email,
-					"metadata" => array("Purpose" => $purpose, "Frequency" => $frequency),
-				));
+					"metadata" => ['Purpose' => $purpose, 'Frequency' => $frequency,],
+					'description' => 'Please change me',
+				]);
 
 				$return_data["success"] = true;
 
@@ -168,53 +178,53 @@ function stripe_checkout()
 				exit;
 
 				die();
-			} catch (\Stripe\Error\Card $e) {
+			} catch (\Stripe\Exception\CardException $e) {
 				// Since it's a decline, \Stripe\Error\Card will be caught
 				$return_data["success"] = false;
 				$body = $e->getJsonBody();
 				$err  = $body['error'];
-				wp_redirect(home_url() . '' . doenanova_app_slug() . '' . $doenanova_options['page_donation_result'] . '?success=' . $return_data["success"] . '&message=' . urlencode($err["message"]) . '&customer_id=' . $customer_id . '');
+				wp_redirect(home_url() . '' . doenanova_app_slug() . '' . $doenanova_options['page_donation_result'] . '?message=' . urlencode($err["type"]) . '&customer_id=' . $customer_id . '');
 				exit;
 				die();
-			} catch (\Stripe\Error\RateLimit $e) {
+			} catch (\Stripe\Exception\RateLimitException $e) {
 				// Too many requests made to the API too quickly
 				$return_data["success"] = false;
 				$body = $e->getJsonBody();
 				$err  = $body['error'];
-				wp_redirect(home_url() . '' . doenanova_app_slug() . '' . $doenanova_options['page_donation_result'] . '?success=' . $return_data["success"] . '&message=' . urlencode($err["message"]) . '&customer_id=' . $customer_id . '');
+				wp_redirect(home_url() . '' . doenanova_app_slug() . '' . $doenanova_options['page_donation_result'] . '?message=' . urlencode($err["message"]) . '&customer_id=' . $customer_id . '');
 				exit;
 				die();
-			} catch (\Stripe\Error\InvalidRequest $e) {
+			} catch (\Stripe\Exception\InvalidRequestException $e) {
 				// Invalid parameters were supplied to Stripe's API
 				$return_data["success"] = false;
 				$body = $e->getJsonBody();
 				$err  = $body['error'];
-				wp_redirect(home_url() . '' . doenanova_app_slug() . '' . $doenanova_options['page_donation_result'] . '?success=' . $return_data["success"] . '&message=' . urlencode($err["message"]) . '&customer_id=' . $customer_id . '');
+				wp_redirect(home_url() . '' . doenanova_app_slug() . '' . $doenanova_options['page_donation_result'] . '?message=' . urlencode($err["message"]) . '&customer_id=' . $customer_id . '');
 				exit;
 				die();
-			} catch (\Stripe\Error\Authentication $e) {
+			} catch (\Stripe\Exception\AuthenticationException $e) {
 				// Authentication with Stripe's API failed
 				// (maybe you changed API keys recently)
 				$return_data["success"] = false;
 				$body = $e->getJsonBody();
 				$err  = $body['error'];
-				wp_redirect(home_url() . '' . doenanova_app_slug() . '' . $doenanova_options['page_donation_result'] . '?success=' . $return_data["success"] . '&message=' . urlencode($err["message"]) . '&customer_id=' . $customer_id . '');
+				wp_redirect(home_url() . '' . doenanova_app_slug() . '' . $doenanova_options['page_donation_result'] . '?message=' . urlencode($err["message"]) . '&customer_id=' . $customer_id . '');
 				exit;
 				die();
-			} catch (\Stripe\Error\ApiConnection $e) {
+			} catch (\Stripe\Exception\ApiConnectionException $e) {
 				// Network communication with Stripe failed
 				$return_data["success"] = false;
 				$body = $e->getJsonBody();
 				$err  = $body['error'];
-				wp_redirect(home_url() . '' . doenanova_app_slug() . '' . $doenanova_options['page_donation_result'] . '?success=' . $return_data["success"] . '&message=' . urlencode($err["message"]) . '&customer_id=' . $customer_id . '');
+				wp_redirect(home_url() . '' . doenanova_app_slug() . '' . $doenanova_options['page_donation_result'] . '?message=' . urlencode($err["message"]) . '&customer_id=' . $customer_id . '');
 				exit;
 				die();
-			} catch (\Stripe\Error\Base $e) {
+			} catch (\Stripe\Exception\ApiErrorException $e) {
 				// Display a very generic error to the user, and maybe send yourself an email
 				$return_data["success"] = false;
 				$body = $e->getJsonBody();
 				$err  = $body['error'];
-				wp_redirect(home_url() . '' . doenanova_app_slug() . '' . $doenanova_options['page_donation_result'] . '?success=' . $return_data["success"] . '&message=' . urlencode($err["message"]) . '&customer_id=' . $customer_id . '');
+				wp_redirect(home_url() . '' . doenanova_app_slug() . '' . $doenanova_options['page_donation_result'] . '?message=' . urlencode($err["message"]) . '&customer_id=' . $customer_id . '');
 				exit;
 				die();
 			} catch (Exception $e) {
@@ -222,7 +232,7 @@ function stripe_checkout()
 				$return_data["success"] = false;
 				$body = $e->getMessage();
 				$err  = $body['error'];
-				wp_redirect(home_url() . '' . doenanova_app_slug() . '' . $doenanova_options['page_donation_result'] . '?success=' . $return_data["success"] . '&message=' . urlencode($err["message"]) . '&customer_id=' . $customer_id . '');
+				wp_redirect(home_url() . '' . doenanova_app_slug() . '' . $doenanova_options['page_donation_result'] . '?message=' . urlencode($err["message"]) . '&customer_id=' . $customer_id . '');
 				exit;
 				die();
 			}
@@ -230,37 +240,46 @@ function stripe_checkout()
 
 			//RECURRING DONATIONS
 			try {
-				$plan = \Stripe\Plan::create(array(
-					"amount" => $amount * 100,
-					"interval" => $frequency,
-					"product" => array(
-						"name" => $amount . "/" . $frequency . "/" . $customer_id
-					),
-					"currency" => $currency,
-					"id" => $amount . "_" . $frequency . "_" . $customer_id
-				));
+				$product = $stripe->products->create([
+					'name' => $amount,
+					'metadata' => ['Purpose' => $purpose, 'Frequency' => $frequency,],
+					'description' => 'Please change me',
+				]);
 
-				$subscription = \Stripe\Subscription::create(array(
-					"customer" => $customer_id,
-					"items" => array(
-						array(
-							"plan" => $plan,
-						),
-					),
-					"metadata" => array("Purpose" => $purpose, "Frequency" => $frequency),
-				));
+				$price = $stripe->prices->create([
+					'unit_amount' => $amount * 100,
+					'currency' => 'brl',
+					'recurring' => ['interval' => $frequency],
+					'product' => $product->id,
+					'metadata' => ['Purpose' => $purpose, 'Frequency' => $frequency,],
+				]);
 
-				$invoice = \Stripe\Invoice::all(array(
-					"limit" => 1,
-					"customer" => $customer_id
-				));
+				$subscription = $stripe->subscriptions->create([
+					'customer' => $customer_id,
+					'items' => [
+						['price' => $price->id],
+					],
+					'default_payment_method' => $source->data[0]->id,
+					'metadata' => ['Purpose' => $purpose, 'Frequency' => $frequency,],
+				]);
 
-				$chargeId = $invoice->data[0]->charge;
+				$invoiceId = $subscription->latest_invoice;
 
-				$ch = \Stripe\Charge::retrieve($chargeId);
-				$ch->metadata->Purpose = $purpose;
-				$ch->metadata->Frequency = $frequency;
-				$ch->save();
+				$stripe->invoices->update(
+					$invoiceId,
+					['metadata' => ['Purpose' => $purpose, 'Frequency' => $frequency,]]
+				);
+
+				$invoiceObj = $stripe->invoices->retrieve(
+					$invoiceId,
+					[]
+				);
+
+				$stripe->charges->update(
+					$invoiceObj->charge,
+					['metadata' => ['Purpose' => $purpose, 'Frequency' => $frequency,]]
+				);
+
 
 				$return_data["success"] = true;
 
@@ -268,53 +287,53 @@ function stripe_checkout()
 				exit;
 
 				die();
-			} catch (\Stripe\Error\Card $e) {
+			} catch (\Stripe\Exception\CardException $e) {
 				// Since it's a decline, \Stripe\Error\Card will be caught
 				$return_data["success"] = false;
 				$body = $e->getJsonBody();
 				$err  = $body['error'];
-				wp_redirect(home_url() . '' . doenanova_app_slug() . '' . $doenanova_options['page_donation_result'] . '?success=' . $return_data["success"] . '&message=' . urlencode($err["message"]) . '&status=' . $e->getHttpStatus() . '&type=' . $err['type'] . '&code=' . $err['code'] . '&param=' . $err['param'] . '&customer_id=' . $customer_id . '');
+				wp_redirect(home_url() . '' . doenanova_app_slug() . '' . $doenanova_options['page_donation_result'] . '?message=' . urlencode($err["message"]) . '&status=' . $e->getHttpStatus() . '&type=' . $err['type'] . '&code=' . $err['code'] . '&param=' . $err['param'] . '&customer_id=' . $customer_id . '');
 				exit;
 				die();
-			} catch (\Stripe\Error\RateLimit $e) {
+			} catch (\Stripe\Exception\RateLimitException $e) {
 				// Too many requests made to the API too quickly
 				$return_data["success"] = false;
 				$body = $e->getJsonBody();
 				$err  = $body['error'];
-				wp_redirect(home_url() . '' . doenanova_app_slug() . '' . $doenanova_options['page_donation_result'] . '?success=' . $return_data["success"] . '&message=' . urlencode($err["message"]) . '&status=' . $e->getHttpStatus() . '&type=' . $err['type'] . '&code=' . $err['code'] . '&param=' . $err['param'] . '&customer_id=' . $customer_id . '');
+				wp_redirect(home_url() . '' . doenanova_app_slug() . '' . $doenanova_options['page_donation_result'] . '?message=' . urlencode($err["message"]) . '&status=' . $e->getHttpStatus() . '&type=' . $err['type'] . '&code=' . $err['code'] . '&param=' . $err['param'] . '&customer_id=' . $customer_id . '');
 				exit;
 				die();
-			} catch (\Stripe\Error\InvalidRequest $e) {
+			} catch (\Stripe\Exception\InvalidRequestException $e) {
 				// Invalid parameters were supplied to Stripe's API
 				$return_data["success"] = false;
 				$body = $e->getJsonBody();
 				$err  = $body['error'];
-				wp_redirect(home_url() . '' . doenanova_app_slug() . '' . $doenanova_options['page_donation_result'] . '?success=' . $return_data["success"] . '&message=' . urlencode($err["message"]) . '&status=' . $e->getHttpStatus() . '&type=' . $err['type'] . '&code=' . $err['code'] . '&param=' . $err['param'] . '&customer_id=' . $customer_id . '');
+				wp_redirect(home_url() . '' . doenanova_app_slug() . '' . $doenanova_options['page_donation_result'] . '?message=' . urlencode($err["message"]) . '&status=' . $e->getHttpStatus() . '&type=' . $err['type'] . '&code=' . $err['code'] . '&param=' . $err['param'] . '&customer_id=' . $customer_id . '');
 				exit;
 				die();
-			} catch (\Stripe\Error\Authentication $e) {
+			} catch (\Stripe\Exception\AuthenticationException $e) {
 				// Authentication with Stripe's API failed
 				// (maybe you changed API keys recently)
 				$return_data["success"] = false;
 				$body = $e->getJsonBody();
 				$err  = $body['error'];
-				wp_redirect(home_url() . '' . doenanova_app_slug() . '' . $doenanova_options['page_donation_result'] . '?success=' . $return_data["success"] . '&message=' . urlencode($err["message"]) . '&status=' . $e->getHttpStatus() . '&type=' . $err['type'] . '&code=' . $err['code'] . '&param=' . $err['param'] . '&customer_id=' . $customer_id . '');
+				wp_redirect(home_url() . '' . doenanova_app_slug() . '' . $doenanova_options['page_donation_result'] . '?message=' . urlencode($err["message"]) . '&status=' . $e->getHttpStatus() . '&type=' . $err['type'] . '&code=' . $err['code'] . '&param=' . $err['param'] . '&customer_id=' . $customer_id . '');
 				exit;
 				die();
-			} catch (\Stripe\Error\ApiConnection $e) {
+			} catch (\Stripe\Exception\ApiConnectionException $e) {
 				// Network communication with Stripe failed
 				$return_data["success"] = false;
 				$body = $e->getJsonBody();
 				$err  = $body['error'];
-				wp_redirect(home_url() . '' . doenanova_app_slug() . '' . $doenanova_options['page_donation_result'] . '?success=' . $return_data["success"] . '&message=' . urlencode($err["message"]) . '&status=' . $e->getHttpStatus() . '&type=' . $err['type'] . '&code=' . $err['code'] . '&param=' . $err['param'] . '&customer_id=' . $customer_id . '');
+				wp_redirect(home_url() . '' . doenanova_app_slug() . '' . $doenanova_options['page_donation_result'] . '?message=' . urlencode($err["message"]) . '&status=' . $e->getHttpStatus() . '&type=' . $err['type'] . '&code=' . $err['code'] . '&param=' . $err['param'] . '&customer_id=' . $customer_id . '');
 				exit;
 				die();
-			} catch (\Stripe\Error\Base $e) {
+			} catch (\Stripe\Exception\ApiErrorException $e) {
 				// Display a very generic error to the user, and maybe send yourself an email
 				$return_data["success"] = false;
 				$body = $e->getJsonBody();
 				$err  = $body['error'];
-				wp_redirect(home_url() . '' . doenanova_app_slug() . '' . $doenanova_options['page_donation_result'] . '?success=' . $return_data["success"] . '&message=' . urlencode($err["message"]) . '&status=' . $e->getHttpStatus() . '&type=' . $err['type'] . '&code=' . $err['code'] . '&param=' . $err['param'] . '&customer_id=' . $customer_id . '');
+				wp_redirect(home_url() . '' . doenanova_app_slug() . '' . $doenanova_options['page_donation_result'] . '?message=' . urlencode($err["message"]) . '&status=' . $e->getHttpStatus() . '&type=' . $err['type'] . '&code=' . $err['code'] . '&param=' . $err['param'] . '&customer_id=' . $customer_id . '');
 				exit;
 				die();
 			} catch (Exception $e) {
@@ -322,7 +341,7 @@ function stripe_checkout()
 				$return_data["success"] = false;
 				$body = $e->getMessage();
 				$err  = $body['error'];
-				wp_redirect(home_url() . '' . doenanova_app_slug() . '' . $doenanova_options['page_donation_result'] . '?success=' . $return_data["success"] . '&message=' . urlencode($err["message"]) . '&status=' . $e->getMessage() . '&type=' . $err['type'] . '&code=' . $err['code'] . '&param=' . $err['param'] . '&customer_id=' . $customer_id . '');
+				wp_redirect(home_url() . '' . doenanova_app_slug() . '' . $doenanova_options['page_donation_result'] . '?message=' . urlencode($err["message"]) . '&status=' . $e->getMessage() . '&type=' . $err['type'] . '&code=' . $err['code'] . '&param=' . $err['param'] . '&customer_id=' . $customer_id . '');
 				exit;
 				die();
 			}
@@ -343,7 +362,9 @@ function stripe_checkout()
 function stripe_delete_card()
 {
 	global $stripe_secret_key;
-	\Stripe\Stripe::setApiKey($stripe_secret_key);
+	$stripe = new \Stripe\StripeClient(
+		$stripe_secret_key
+	);
 
 	global $stripe_is_TEST_mode;
 	global $stripe_is_LIVE_mode;
@@ -368,8 +389,11 @@ function stripe_delete_card()
 
 	try {
 
-		$customer = \Stripe\Customer::retrieve($customer_id);
-		$customer->sources->retrieve($card_id)->delete();
+		$stripe->customers->deleteSource(
+			$customer_id,
+			$card_id,
+			[]
+		);
 
 		$return_data["success"] = true;
 
@@ -377,7 +401,7 @@ function stripe_delete_card()
 		exit;
 
 		die();
-	} catch (\Stripe\Error\Card $e) {
+	} catch (\Stripe\Exception\CardException $e) {
 		$body = $e->getJsonBody();
 		$err  = $body['error'];
 		$error = $err['message'];
@@ -395,7 +419,9 @@ function stripe_delete_card()
 function stripe_cancel_subscription()
 {
 	global $stripe_secret_key;
-	\Stripe\Stripe::setApiKey($stripe_secret_key);
+	$stripe = new \Stripe\StripeClient(
+		$stripe_secret_key
+	);
 
 	global $stripe_is_TEST_mode;
 	global $stripe_is_LIVE_mode;
@@ -420,8 +446,10 @@ function stripe_cancel_subscription()
 
 	try {
 
-		$sub = \Stripe\Subscription::retrieve($subscriptionId);
-		$sub->cancel();
+		$stripe->subscriptions->cancel(
+			$subscriptionId,
+			[]
+		);
 
 		$return_data["success"] = true;
 
@@ -429,7 +457,7 @@ function stripe_cancel_subscription()
 		exit;
 
 		die();
-	} catch (\Stripe\Error\Card $e) {
+	} catch (\Stripe\Exception\CardException $e) {
 		$body = $e->getJsonBody();
 		$err  = $body['error'];
 		$error = $err['message'];

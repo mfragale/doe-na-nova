@@ -21,12 +21,14 @@ $danger: #ff694c;
 $light: $gray-100;
 $dark: $gray-900;
 
-#doenanova-wrap {
-	padding: 30px 10px;
-	margin: 0 auto;
-	max-width: 500px;
+@import "wppb-forms";
 
-	position: relative;
+#doenanova-wrap {
+	// padding: 30px 10px;
+	// margin: 0 auto;
+	// max-width: 500px;
+
+	// position: relative;
 
 	.doenanova-page-title {
 		margin-bottom: 20px;
@@ -82,17 +84,6 @@ $dark: $gray-900;
 	#form-doar {
 		#amount_wrap {
 			text-align: center;
-			//padding: 20px 0;
-
-			span {
-				vertical-align: middle;
-			}
-
-			.currency {
-				color: $gray-300;
-				display: inline-block;
-				font-size: 20px;
-			}
 
 			.amount_width_container {
 				width: 100px;
@@ -109,9 +100,11 @@ $dark: $gray-900;
 					text-align: center;
 					background: none;
 					width: 100%;
+
 					border-width: 0px;
-					border-bottom: 2px solid $gray-300;
+					border-bottom-width: 2px;
 					border-radius: 0;
+
 					-webkit-transition: all 100ms ease-in-out;
 					-moz-transition: all 100ms ease-in-out;
 					-ms-transition: all 100ms ease-in-out;
@@ -131,10 +124,9 @@ $dark: $gray-900;
 				}
 			}
 
-			.cents {
-				color: $gray-300;
-				font-size: 20px;
-				display: inline-block;
+			.input-group-text {
+				background: none;
+				border: none;
 			}
 		}
 
@@ -185,64 +177,16 @@ $dark: $gray-900;
 	//RECURRING DONATIONS PAGE
 
 	//RECENT TRANSACTIONS PAGE
-	#transacoes-recentes,
-	#doacoes-recorrentes {
-		.level {
-			margin: -1px 0;
-			padding: 10px 0px;
+	#transacoes {
+		@media only screen and (max-width: 460px) {
+			font-size: 0.8em;
+		}
 
-			&:first-of-type {
-				border-top: none;
-			}
-
-			&:last-of-type {
-				margin-bottom: 20px;
-			}
-
-			.level-item {
-				.recent_transactions_date {
-					text-align: center;
-					margin-right: 10px;
-					color: $gray-500;
-
-					.heading {
-						margin: 0;
+		table {
+			tbody {
+				tr {
+					td {
 					}
-				}
-
-				&.recent_transactions_purpose_frequency {
-					flex-grow: 1;
-					flex-shrink: 1;
-					justify-content: left;
-					margin-right: 10px;
-
-					.heading {
-						margin: 0;
-						line-height: 1;
-					}
-				}
-				.recent_transactions_last4 {
-					margin-right: 10px;
-					font-size: 12px;
-					color: $gray-500;
-				}
-				.recent_transactions_amount {
-					text-align: right;
-				}
-				.recent_transactions_status {
-					margin-left: 5px;
-				}
-			}
-
-			&.Succeeded {
-			}
-			&.Pending {
-			}
-			&.Failed {
-				.recent_transactions_purpose_frequency,
-				.recent_transactions_amount {
-					text-decoration: line-through;
-					color: $gray-300;
 				}
 			}
 		}
@@ -262,89 +206,67 @@ $dark: $gray-900;
 	//RECENT TRANSACTIONS PAGE
 
 	//SAVED CARDS PAGE
-	#cartoes-salvos {
-		.credit-card {
-			background: $gray-300;
 
-			/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f6f8f9+0,e5ebee+50,d7dee3+51,f5f7f9+100;White+Gloss */
-			background: #f6f8f9; /* Old browsers */
-			background: -moz-linear-gradient(
-				top,
-				$gray-100 0%,
-				$gray-300 50%,
-				$gray-500 51%,
-				$gray-100 100%
-			); /* FF3.6-15 */
-			background: -webkit-linear-gradient(
-				top,
-				$gray-100 0%,
-				$gray-300 50%,
-				$gray-500 51%,
-				$gray-100 100%
-			); /* Chrome10-25,Safari5.1-6 */
-			background: linear-gradient(
-				to bottom,
-				$gray-100 0%,
-				$gray-300 50%,
-				$gray-500 51%,
-				$gray-100 100%
-			); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr=$gray-100, endColorstr=$gray-100,GradientType=0 ); /* IE6-9 */
-
-			border-radius: 8px;
-			padding: 20px 30px;
-			margin: 20px auto;
-			max-width: 320px;
-
-			.cc-funding {
-				float: left;
-				color: $gray-900;
-				text-transform: uppercase;
-				letter-spacing: 1px;
-				font-size: 10px;
-				margin-top: 6px;
-			}
-			.cc-brand {
-				text-align: right;
-			}
-			.cc-number {
-				font-family: monospace !important;
-				text-align: center;
-				font-size: 20px;
-				margin: 40px 0 10px;
-				text-shadow: 0px -1px #fff;
-				color: $gray-700;
-			}
-			.cc-name {
-				font-family: monospace !important;
-				float: left;
-				font-size: 10px;
-
-				small {
-					color: $gray-900;
-					text-transform: uppercase;
-					letter-spacing: 1px;
-					font-size: 8px;
-				}
-			}
-			.cc-exp {
-				font-family: monospace !important;
-				float: right;
-				font-size: 10px;
-				text-align: right;
-
-				small {
-					color: $gray-900;
-					text-transform: uppercase;
-					letter-spacing: 1px;
-					font-size: 8px;
-				}
-			}
+	#cartoes {
+		// Cartões salvos > Cartão de crédito
+		.card {
+			min-height: 180px;
+			max-width: 400px;
+			padding: 20px;
+			border-radius: 14px;
+			color: #fff;
+			border: none;
 		}
 
-		#delete_card {
-			display: flex;
-			justify-content: center;
+		.card::before {
+			height: 100%;
+			width: 100%;
+			position: absolute;
+			z-index: 0;
+			content: "";
+			bottom: 0;
+			top: 0;
+			right: 0;
+			left: 0;
+			border-radius: 14px;
+			background: $primary;
+			background: linear-gradient(90deg, $primary 0%, $danger 100%);
+			opacity: 0.8;
+		}
+
+		.card::after {
+			height: 100%;
+			width: 100%;
+			position: absolute;
+			z-index: 0;
+			content: "";
+			bottom: 0;
+			top: 0;
+			right: 0;
+			left: 0;
+			border-radius: 14px;
+			background: $primary;
+			background: linear-gradient(90deg, $primary 0%, $danger 100%);
+			clip-path: polygon(28% 13%, 48% 45%, 75% 63%, 100% 99%, 0 100%, 0% 60%, 0 0);
+		}
+
+		.upper {
+			position: relative;
+			z-index: 1;
+		}
+
+		.upper h6 {
+			font-size: 18px;
+		}
+
+		.upper h4 {
+			font-size: 15px;
+			text-transform: uppercase;
+		}
+
+		.lower {
+			position: relative;
+			z-index: 1;
 		}
 	}
 	//SAVED CARDS PAGE
@@ -386,19 +308,19 @@ $dark: $gray-900;
 	//DONATION RESULT PAGE
 
 	//LOGIN & REGISTER LINKS
-	.login_register {
-		padding: 50px 0;
-		margin: 0 auto;
-		max-width: 240px;
-		text-align: center;
+	// .login_register {
+	// 	padding: 50px 0;
+	// 	margin: 0 auto;
+	// 	max-width: 240px;
+	// 	text-align: center;
 
-		p {
-		}
+	// 	p {
+	// 	}
 
-		.doenanova-btn {
-			margin-top: 10px;
-		}
-	}
+	// 	.doenanova-btn {
+	// 		margin-top: 10px;
+	// 	}
+	// }
 }
 //#doenanova-wrap
 
@@ -407,9 +329,21 @@ $dark: $gray-900;
 		li {
 			a {
 				font-size: 0.8em;
+				color: $gray-600;
+				border-radius: 0;
+				border: none;
+
+				&:hover {
+					background-color: $gray-200;
+				}
 
 				svg {
 					margin-right: 5px;
+				}
+
+				&.active {
+					background-color: $primary;
+					color: $gray-100;
 				}
 			}
 			@media only screen and (max-width: 460px) {
@@ -419,98 +353,6 @@ $dark: $gray-900;
 					span {
 						display: none;
 					}
-				}
-			}
-		}
-	}
-}
-
-#cartoes {
-	// Cartões salvos > Cartão de crédito
-	.card {
-		//height: 180px;
-		max-width: 300px;
-		padding: 20px;
-		// background-color: #fff;
-		border-radius: 14px;
-		//position: relative;
-		color: #fff;
-		//background-image: url(https://i.imgur.com/5rm6bLu.jpg);
-		//z-index: 5;
-		//background-size: cover;
-		// opacity: 1;
-		border: none;
-	}
-
-	.card::before {
-		height: 100%;
-		width: 100%;
-		position: absolute;
-		z-index: 0;
-		content: "";
-		bottom: 0;
-		top: 0;
-		right: 0;
-		left: 0;
-		border-radius: 14px;
-		background: $primary;
-		background: linear-gradient(90deg, $primary 0%, $danger 100%);
-		opacity: 0.8;
-	}
-
-	.card::after {
-		height: 100%;
-		width: 100%;
-		position: absolute;
-		z-index: 0;
-		content: "";
-		bottom: 0;
-		top: 0;
-		right: 0;
-		left: 0;
-		border-radius: 14px;
-		background: $primary;
-		background: linear-gradient(90deg, $primary 0%, $danger 100%);
-		clip-path: polygon(28% 13%, 48% 45%, 75% 63%, 100% 99%, 0 100%, 0% 60%, 0 0);
-	}
-
-	.upper {
-		//display: flex;
-		//justify-content: space-between;
-		//align-items: center;
-		//z-index: 1;
-
-		position: relative;
-		z-index: 1;
-	}
-
-	.upper h6 {
-		font-size: 18px;
-	}
-
-	.upper h4 {
-		font-size: 15px;
-		text-transform: uppercase;
-	}
-
-	.lower {
-		position: relative;
-		z-index: 1;
-		//position: absolute;
-		//bottom: 20px;
-		//z-index: 1;
-	}
-}
-
-#transacoes {
-	@media only screen and (max-width: 460px) {
-		font-size: 0.8em;
-	}
-
-	table {
-		tbody {
-			tr {
-				td {
 				}
 			}
 		}

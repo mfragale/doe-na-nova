@@ -38,10 +38,10 @@ jQuery(document).ready(function ($) {
 
 
 	//Fade in and zoom out for #doenanova-wrap
-	function doenanova_wrap_fadein() {
-		$('#doenanova-wrap').css({ "transform": "scale(1)", "opacity": "100" });
-	}
-	setTimeout(doenanova_wrap_fadein, 200);
+	// function doenanova_wrap_fadein() {
+	// 	$('#doenanova-wrap').css({ "transform": "scale(1)", "opacity": "100" });
+	// }
+	// setTimeout(doenanova_wrap_fadein, 200);
 
 
 

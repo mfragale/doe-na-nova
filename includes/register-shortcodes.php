@@ -8,7 +8,9 @@ function doe_na_nova_form_init()
 {
 	add_shortcode('doe-na-nova-form-doar', 'doe_na_nova_donation_form_shortcode');
 
-	add_shortcode('doe-na-nova-header', 'doe_na_nova_header_shortcode');
+	add_shortcode('doe-na-nova-nav', 'doe_na_nova_header_shortcode');
+
+	add_shortcode('doe-na-nova-perfil', 'doe_na_nova_perfil_shortcode');
 
 	add_shortcode('doe-na-nova-resultado-doacao', 'doe_na_nova_donation_result_shortcode');
 

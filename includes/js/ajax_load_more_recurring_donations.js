@@ -96,11 +96,11 @@ jQuery(document).ready(function ($) {
 							month[10] = phpVars.nov;
 							month[11] = phpVars.dec;
 							var n = month[date.getMonth()];
-							var subscription_month = n;
+							var subscription_month = ("0" + (date.getMonth() + 1)).slice(-2);
 
-							var subscription_year = date.getFullYear();
-							var subscription_day = date.getDate();
-							var subscription_month_number = date.getMonth() + 1;
+							var subscription_year = date.getFullYear().toString().substr(-2);
+							var subscription_day = ("0" + (date.getDate())).slice(-2);
+							var subscription_month_number = ("0" + (date.getMonth() + 1)).slice(-2);
 
 							var weekDay = new Array();
 							weekDay[0] = phpVars.sun;
@@ -131,10 +131,10 @@ jQuery(document).ready(function ($) {
 							month2[10] = phpVars.nov;
 							month2[11] = phpVars.dec;
 							var n2 = month2[date2.getMonth()];
-							var subscription_nextBilling_month = n2;
-							var subscription_nextBilling_year = date2.getFullYear();
-							var subscription_nextBilling_day = date2.getDate();
-							var subscription_nextBilling_month_number = date2.getMonth() + 1;
+							var subscription_nextBilling_month = ("0" + (date2.getMonth() + 1)).slice(-2);
+							var subscription_nextBilling_year = date2.getFullYear().toString().substr(-2);;
+							var subscription_nextBilling_day = ("0" + (date2.getDate())).slice(-2);
+							var subscription_nextBilling_month_number = ("0" + (date2.getMonth() + 1)).slice(-2);
 
 							var weekDay2 = new Array();
 							weekDay2[0] = phpVars.sun;
@@ -182,27 +182,53 @@ jQuery(document).ready(function ($) {
 										<div>` + subscription_purpose + `</div>
 										<div><small>` + subscription_interval_localised + `</small></div>
 									</div>
-									<div class="col">
+									<div class="col text-end me-3">
 										` + phpVars.doe_na_nova_currency_symbol_js + `` + subscription_planAmount + `,00
 									</div>
 								</button>
 
 								<div id="subs-` + subscription_id + `-dropdown" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
 									<div class="accordion-body">
-										<p><small><strong><?php _e('Created on', 'doenanova'); ?></strong>: <?php echo strftime("%a, %d/%m/%y", $subscription->created); ?></small></p>
-										<p><small><strong><?php _e('Frequency', 'doenanova'); ?></strong>: <?php echo $subscription_interval; ?></small></p>
-										<p><small><strong><?php _e('Next billing', 'doenanova'); ?></strong>: <?php echo strftime("%a, %d/%m/%y", $subscription->current_period_end); ?></small></p>
-										<p><small><strong><?php _e('Amount', 'doenanova'); ?></strong>: <?php echo doe_na_nova_currency_symbol(); ?><?php echo $subscription->plan->amount / 100; ?>,00</small></p>
-										<p><small><strong><?php _e('Payment method', 'doenanova'); ?></strong>: <i class="fab fa-cc-<?php echo $customer_cardBrand; ?>"></i> <?php echo $customer_cardLast4; ?></small></p>
-										<p><small><strong><?php _e('Purpose', 'doenanova'); ?></strong>: <?php echo $subscription->metadata->Purpose; ?></small></p>
-										<p><small><strong><?php _e('Status', 'doenanova'); ?></strong>: <span class="` + badge + ` tag"><i class="fas fa-xs fa-` + icon + `"></i> <?php _e('Active', 'doenanova'); ?></span></small></p>
-										<br />
-										<form action="<?php echo get_admin_url(); ?>admin-post.php" method="POST">
+										<form action="` + phpVars.action_url + `" method="POST">
 											<input type='hidden' name='action' value='stripe_cancel_subscription' />
 											<input type="hidden" name='subscription_id' value='` + subscription_id + `' />
-											<input type="hidden" name="current_url" id="current_url" value="<?php echo get_permalink(); ?>">
-											<button class="btn btn-xs btn-danger load-on-click cancel_subscription_btn" title="<?php _e('Delete this recurring donation', 'doenanova'); ?>"><i class="fas fa-trash-alt"></i> <?php _e('Delete this recurring donation', 'doenanova'); ?></button>
+											<input type="hidden" name="current_url" id="current_url" value="` + phpVars.current_url + `">
+											<button class="btn btn-xs btn-danger float-end load-on-click cancel_subscription_btn" title="Delete this recurring donation"><i class="fas fa-trash-alt"></i></button>
 										</form>
+
+										<table class="table">
+											<tbody>
+												<tr>
+													<th scope="row">Criada em</th>
+													<td>` + subscription_week_day + `, ` + subscription_day + `/` + subscription_month_number + `/` + subscription_year + `</td>
+												</tr>
+												<tr>
+													<th scope="row">Frequência</th>
+													<td>` + subscription_interval_localised + `</td>
+												</tr>
+												<tr>
+													<th scope="row">Próximo pagamento</th>
+													<td>` + subscription_nextBilling_week_day + `, ` + subscription_nextBilling_day + `/` + subscription_nextBilling_month_number + `/` + subscription_nextBilling_year + `</td>
+												</tr>
+												<tr>
+													<th scope="row">Valor</th>
+													<td>` + phpVars.doe_na_nova_currency_symbol_js + `` + subscription_planAmount + `,00</td>
+												</tr>
+												<tr>
+													<th scope="row">Método de pagamento</th>
+													<td><i class="fab fa-cc-` + customer_cardBrand + `"></i> ` + customer_cardLast4 + `</td>
+												</tr>
+												<tr>
+													<th scope="row">Propósito</th>
+													<td>` + subscription_purpose + `</td>
+												</tr>
+												<tr>
+													<th scope="row">Status</th>
+													<td><span class="` + badge + ` tag"><i class="fas fa-xs fa-` + icon + `"></i> Ativo</span></td>
+												</tr>
+											</tbody>
+										</table>
+
 									</div>
 								</div>
 							</div>

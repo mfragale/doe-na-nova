@@ -44,7 +44,22 @@ function doe_na_nova_header_shortcode($atts)
 
 	// Outputs the HTML to replace short code
 	ob_start();
-	include 'doe-na-nova-header.php';
+	include 'doe-na-nova-nav.php';
+	return ob_get_clean();
+}
+
+
+/**
+ * doenanova PERFIL SHORTCODE
+ */
+function doe_na_nova_perfil_shortcode($atts)
+{
+	// Enqueue CSS when this shortcode loaded. 
+	wp_enqueue_style('doenanova-syles');
+
+	// Outputs the HTML to replace short code
+	ob_start();
+	include 'doe-na-nova-perfil.php';
 	return ob_get_clean();
 }
 

@@ -96,9 +96,9 @@ jQuery(document).ready(function ($) {
 							month[10] = phpVars.nov;
 							month[11] = phpVars.dec;
 							var n = month[date.getMonth()];
-							var charge_month = n;
-							var charge_year = date.getFullYear();
-							var charge_day = date.getDate();
+							var charge_month = ("0" + (date.getMonth() + 1)).slice(-2);
+							var charge_year = date.getFullYear().toString().substr(-2);
+							var charge_day = ("0" + (date.getDate())).slice(-2);
 							// (Date in JS sucks...)
 
 							if (charge_status == 'succeeded') {
@@ -133,7 +133,7 @@ jQuery(document).ready(function ($) {
 										<div><small>` + charge_frequency_localised + `</small></div>
 									</td>
 									<td><i class="fab fa-cc-` + charge_brand + `"></i> ` + charge_last_4 + `</td>
-									<td>` + charge_day + `` + charge_month + `` + charge_year + `</td>
+									<td>` + charge_day + `/` + charge_month + `/` + charge_year + `</td>
 									<td class="text-end ` + badge + `"> ` + phpVars["doe_na_nova_currency_symbol_js"] + `` + charge_amount + `,00 </td>
 								</tr>
 								`;

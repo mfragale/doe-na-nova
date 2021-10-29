@@ -67,10 +67,10 @@ function doe_na_nova_currency_symbol()
 /**
  * OUTPUTS CSS STYLE FOR all DIVs id="doenanova-wrap" REQUIRED FOR FADE IN AND ZOOM OUT - see doenanova-styles.less @animation-duration and functions.js doenanova_wrap_fadein()
  */
-function doenanova_wrap_fadein()
-{
-    echo 'style="transform: scale(1.1); opacity: 0;"';
-}
+// function doenanova_wrap_fadein()
+// {
+//     echo 'style="transform: scale(1.1); opacity: 0;"';
+// }
 
 
 
@@ -122,7 +122,9 @@ function doenanova_load_more_charges_ajax()
     header('Content-Type: application/json');
 
     // Authenticate to the Stripe API
-    \Stripe\Stripe::setApiKey($stripe_secret_key);
+    $stripe = new \Stripe\StripeClient(
+        $stripe_secret_key
+    );
 
     //Last charge loaded
     $last_charge = $_POST['last_charge'];
@@ -136,11 +138,11 @@ function doenanova_load_more_charges_ajax()
 
     try {
 
-        $charges = \Stripe\Charge::all(array(
+        $charges = $stripe->charges->all([
             "customer" => $customer_id,
             "limit" => 10,
             "starting_after" => $last_charge
-        ));
+        ]);
 
 
         foreach ($charges->data as $charge) {
@@ -168,7 +170,7 @@ function doenanova_load_more_charges_ajax()
 
 
         //Invalid request errors arise when your request has invalid parameters.
-    } catch (\Stripe\Error\InvalidRequest $e) {
+    } catch (\Stripe\Exception\InvalidRequestException $e) {
         error_log("CRITICAL ERROR: Stripe InvalidRequest");
         error_log('Stripe InvalidRequest - httpStatus:' . $e->getHttpStatus());
         $body = $e->getJsonBody();
@@ -211,7 +213,9 @@ function doenanova_load_more_recurring_donations_ajax()
     header('Content-Type: application/json');
 
     // Authenticate to the Stripe API
-    \Stripe\Stripe::setApiKey($stripe_secret_key);
+    $stripe = new \Stripe\StripeClient(
+        $stripe_secret_key
+    );
 
     //Last subscription loaded
     $last_subscription = $_POST['last_subscription'];
@@ -225,18 +229,26 @@ function doenanova_load_more_recurring_donations_ajax()
 
     try {
 
-        $subscriptions = \Stripe\Subscription::all(array(
+        $subscriptions = $stripe->subscriptions->all([
             "customer" => $customer_id,
             "status" => 'active',
             "limit" => 10,
             "starting_after" => $last_subscription
-        ));
+        ]);
 
-        $customer = \Stripe\Customer::retrieve($customer_id);
+        $customer = $stripe->customers->retrieve(
+            $customer_id,
+            []
+        );
 
-        if (isset($customer->sources->data[0])) {
-            $customer_cardBrand = strtolower($customer->sources->data[0]->brand);
-            $customer_cardLast4 = $customer->sources->data[0]->last4;
+        if (isset($customer->default_source)) {
+            $source = $stripe->customers->retrieveSource(
+                $customer_id,
+                $customer->default_source,
+                []
+            );
+            $customer_cardBrand = strtolower($source->brand);
+            $customer_cardLast4 = $source->last4;
         } else {
             $customer_cardBrand = false;
             $customer_cardLast4 = __('No saved card.', 'doenanova');
@@ -269,7 +281,7 @@ function doenanova_load_more_recurring_donations_ajax()
 
 
         //Invalid request errors arise when your request has invalid parameters.
-    } catch (\Stripe\Error\InvalidRequest $e) {
+    } catch (\Stripe\Exception\InvalidRequestException $e) {
         error_log("CRITICAL ERROR: Stripe InvalidRequest");
         error_log('Stripe InvalidRequest - httpStatus:' . $e->getHttpStatus());
         $body = $e->getJsonBody();
