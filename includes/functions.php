@@ -149,12 +149,34 @@ function doenanova_load_more_charges_ajax()
 
             $json_decoded = json_decode($charge);
 
+            if ($charge->invoice) { // charge is from a subscription
+                $invoice = $stripe->invoices->retrieve(
+                    $charge->invoice,
+                    []
+                );
+                $charge_purpose = $invoice->lines->data[0]->metadata->Purpose;
+                $charge_frequency = $invoice->lines->data[0]->metadata->Frequency;
+            } else { //charge is from a non recurrent donation
+                $charge_purpose = $charge->metadata->Purpose;
+                $charge_frequency = $charge->metadata->Frequency;
+            }
+
+            // if ($charge_frequency == 'month') {
+            //     $charge_frequency = __('Monthly', 'doenanova');
+            // } else if ($charge_frequency == 'week') {
+            //     $charge_frequency = __('Weekly', 'doenanova');
+            // } else if ($charge_frequency == 'year') {
+            //     $charge_frequency = __('Yearly', 'doenanova');
+            // } else {
+            //     $charge_frequency = '';
+            // }
+
             $return_data[] = array(
                 'charge_id' => $charge->id,
                 'charge_status' => $charge->status,
                 'charge_date' => $charge->created,
-                'charge_purpose' => $charge->metadata->Purpose,
-                'charge_frequency' => $charge->metadata->Frequency,
+                'charge_purpose' => $charge_purpose,
+                'charge_frequency' => $charge_frequency,
                 'charge_brand' => $charge->source->brand,
                 'charge_last_4' => $charge->source->last4,
                 'charge_amount' => $charge->amount / 100,

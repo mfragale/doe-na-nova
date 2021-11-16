@@ -50,18 +50,18 @@
 									$charge->invoice,
 									[]
 								);
-								$charge_purpose = $invoice->metadata->Purpose;
-								$charge_frequency = $invoice->metadata->Frequency;
+								$charge_purpose = $invoice->lines->data[0]->metadata->Purpose;
+								$charge_frequency = $invoice->lines->data[0]->metadata->Frequency;
 							} else { //charge is from a non recurrent donation
 								$charge_purpose = $charge->metadata->Purpose;
 								$charge_frequency = $charge->metadata->Frequency;
 							}
 
-							if ($charge->metadata->Frequency == 'month') {
+							if ($charge_frequency == 'month') {
 								$charge_frequency = __('Monthly', 'doenanova');
-							} else if ($charge->metadata->Frequency == 'week') {
+							} else if ($charge_frequency == 'week') {
 								$charge_frequency = __('Weekly', 'doenanova');
-							} else if ($charge->metadata->Frequency == 'year') {
+							} else if ($charge_frequency == 'year') {
 								$charge_frequency = __('Yearly', 'doenanova');
 							} else {
 								$charge_frequency = '';

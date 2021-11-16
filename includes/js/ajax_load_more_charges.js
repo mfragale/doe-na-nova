@@ -125,6 +125,7 @@ jQuery(document).ready(function ($) {
 								var charge_frequency_localised = '';
 							}
 
+
 							//Output what we want			  
 							return `		
 								<tr class="` + status + ` ` + charge_id + `">
