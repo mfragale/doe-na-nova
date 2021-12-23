@@ -29,7 +29,7 @@
 
 
 
-		<div id="cartoes">
+		<div class="accordion" id="cartoes">
 
 
 			<?php if (isset($_GET['success'])) {
@@ -46,32 +46,44 @@
 
 				<?php foreach ($cardList->data as $card) { ?>
 
-					<form id="delete_card" action="<?php echo get_admin_url(); ?>admin-post.php" method="POST">
 
-						<input type='hidden' name='action' value='stripe_delete_card' />
-						<input type="hidden" name='card_id' value='<?php echo $card->id; ?>' />
-						<input type="hidden" name="current_url" id="current_url" value="<?php echo get_permalink(); ?>">
-
-						<button type="button" class="btn btn-sm btn-danger ms-2 float-end load-on-click" title="<?php _e('Delete this card', 'doenanova'); ?>"><i class="fas fa-trash-alt"></i></button>
-
-					</form>
-
-					<div class="card">
-						<div class="upper mb-auto">
-							<div class="d-flex justify-content-between">
-								<h6><?php echo $card->funding; ?></h6>
-								<h4><i class="fab fa-2x fa-cc-<?php echo strtolower($card->brand); ?>"></i></h4>
+					<div class="accordion-item" id="">
+						<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#subs-<?php echo $card->id; ?>-dropdown" aria-expanded="true" aria-controls="subs-<?php echo $card->id; ?>-dropdown">
+							<div class="col">
+								<div><small><i class="fab fa-2x fa-cc-<?php echo strtolower($card->brand); ?>"></i></small> •••• •••• •••• <?php echo $card->last4; ?></div>
 							</div>
-						</div>
-						<div class="lower">
-							<h5><?php echo $card->name; ?></h5>
-							<div class="d-flex justify-content-between">
-								<div>•••• •••• •••• <?php echo $card->last4; ?></div>
-								<div><?php echo $card->exp_month; ?>/<?php echo $card->exp_year; ?></div>
+							<div class="col text-end me-3">
+								<?php echo $card->funding; ?>
 							</div>
+						</button>
 
+						<div id="subs-<?php echo $card->id; ?>-dropdown" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+							<div class="accordion-body">
+								<form id="delete_card" action="<?php echo get_admin_url(); ?>admin-post.php" method="POST">
+									<input type='hidden' name='action' value='stripe_delete_card' />
+									<input type="hidden" name='card_id' value='<?php echo $card->id; ?>' />
+									<input type="hidden" name="current_url" id="current_url" value="<?php echo get_permalink(); ?>">
+									<button class="btn btn-xs btn-danger float-end load-on-click" title="<?php _e('Delete this card', 'doenanova'); ?>"><i class="fas fa-trash-alt"></i></button>
+								</form>
+
+								<table class="table">
+									<tbody>
+										<tr>
+											<th scope="row"><?php _e('Card name', 'doenanova'); ?></th>
+											<td><?php echo $card->name; ?></td>
+										</tr>
+										<tr>
+											<th scope="row"><?php _e('Expire date', 'doenanova'); ?></th>
+											<td><?php echo $card->exp_month; ?>/<?php echo $card->exp_year; ?></td>
+										</tr>
+									</tbody>
+								</table>
+
+							</div>
 						</div>
 					</div>
+
+
 
 
 				<?php } ?>

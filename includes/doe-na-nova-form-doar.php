@@ -89,30 +89,6 @@
 
 
 
-					<!-- ********** FREQUENCY ********** -->
-					<div class="form-floating">
-						<select class="form-select" id="frequency" name="frequency">
-							<option value="one time" checked selected><?php _e('One time', 'doenanova'); ?></option>
-
-							<?php if (is_user_logged_in()) { ?>
-								<option value="week"><?php _e('Weekly', 'doenanova'); ?></option>
-								<option value="month"><?php _e('Monthly', 'doenanova'); ?></option>
-								<option value="year"><?php _e('Yearly', 'doenanova'); ?></option>
-							<?php } ?>
-						</select>
-						<label for="frequency"><?php _e('Frequency', 'doenanova'); ?></label>
-					</div>
-					<!-- ********** FREQUENCY ********** -->
-
-
-
-
-				</div><!-- <div class="col"> -->
-				<div class="col">
-
-
-
-
 					<!-- ********** PURPOSE ********** -->
 					<div class="form-floating">
 						<select class="form-select" id="purpose" name="purpose">
@@ -143,6 +119,35 @@
 
 
 				</div><!-- <div class="col"> -->
+
+
+
+
+				<div class="col">
+					<!-- ********** FREQUENCY ********** -->
+					<div class="form-floating">
+						<select class="form-select" id="frequency" name="frequency">
+							<option value="one time" checked selected><?php _e('One time', 'doenanova'); ?></option>
+
+							<?php if (is_user_logged_in()) { ?>
+								<option value="week"><?php _e('Weekly', 'doenanova'); ?></option>
+								<option value="month"><?php _e('Monthly', 'doenanova'); ?></option>
+								<option value="year"><?php _e('Yearly', 'doenanova'); ?></option>
+							<?php } ?>
+						</select>
+						<label for="frequency"><?php _e('Frequency', 'doenanova'); ?></label>
+					</div>
+
+					<!-- <div class="form-check form-switch">
+						<input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+						<label class="form-check-label" for="flexSwitchCheckDefault">Recorrente</label>
+					</div> -->
+					<!-- ********** FREQUENCY ********** -->
+				</div><!-- <div class="col"> -->
+
+
+
+
 			</div><!-- <div class="row"> -->
 
 
