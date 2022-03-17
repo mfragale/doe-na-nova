@@ -263,6 +263,30 @@ function doenanova_options_page()
 			</p>
 
 
+
+
+
+
+
+			<hr />
+
+
+			<h3><?php _e('Contact information', 'doenanova'); ?></h3>
+
+
+			<p>
+				<label class="description" for="doenanova_settings[support_email]"><?php _e('Support Email:', 'doenanova'); ?></label>
+				<input size="40" id="doenanova_settings[support_email]" name="doenanova_settings[support_email]" type="text" value="<?php if (isset($doenanova_options['support_email'])) {
+																																		echo $doenanova_options['support_email'];
+																																	}; ?>" />
+			</p>
+
+
+
+
+
+
+
 			<?php // Restore original Post Data for the $list_pages query
 			wp_reset_postdata(); ?>
 

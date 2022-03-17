@@ -53,7 +53,7 @@ if ($stripe_publishable_key && $stripe_secret_key) { // IF STRIPE KEYS ARE SET B
 
 				<div class="resultado-doacao-footer">
 
-					<small><?php _e('An email has been sent to you with all this information. If you have any questions, contact us at', 'doenanova'); ?> <a href='mailto:<?php echo get_bloginfo('admin_email'); ?>'><?php echo get_bloginfo('admin_email'); ?></a></small>
+					<small><?php _e('An email has been sent to you with all this information. If you have any questions, contact us at', 'doenanova'); ?> <a href='mailto:<?php echo $doenanova_options['support_email']; ?>'><?php echo $doenanova_options['support_email']; ?></a></small>
 
 				</div>
 
