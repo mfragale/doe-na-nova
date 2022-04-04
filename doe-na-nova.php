@@ -10,8 +10,6 @@
  * License URI:		http://www.gnu.org/licenses/gpl-2.0.txt
  */
 
-
-
 // Not called within Wordpress framework
 if (!defined('WPINC')) {
 	die;
