@@ -11,7 +11,7 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="col mb-sm-3">
+			<div class="col mb-3">
 				<div class="d-grid gap-2">
 					<a class="btn btn-primary btn-lg" href="<?php echo esc_url(wp_registration_url()); ?>"><?php _e('Register', 'doenanova'); ?></a>
 				</div>
