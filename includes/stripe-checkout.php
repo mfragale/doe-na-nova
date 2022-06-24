@@ -169,7 +169,7 @@ function stripe_checkout()
 					"currency" => $currency,
 					"receipt_email" => $user_email,
 					"metadata" => ['Purpose' => $purpose, 'Frequency' => $frequency,],
-					'description' => 'Please change me',
+					'description' => 'Doação única',
 				]);
 
 				$return_data["success"] = true;
@@ -243,7 +243,7 @@ function stripe_checkout()
 				$product = $stripe->products->create([
 					'name' => $amount,
 					'metadata' => ['Purpose' => $purpose, 'Frequency' => $frequency,],
-					'description' => 'Please change me',
+					'description' => 'Doação recorrente',
 				]);
 
 				$price = $stripe->prices->create([
