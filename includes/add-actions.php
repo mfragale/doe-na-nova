@@ -55,3 +55,13 @@ add_action('wp_ajax_nopriv_doenanova_load_more_charges', 'doenanova_load_more_ch
 //Load More Recurring Donations
 add_action('wp_ajax_doenanova_load_more_recurring_donations', 'doenanova_load_more_recurring_donations_ajax');
 add_action('wp_ajax_nopriv_doenanova_load_more_recurring_donations', 'doenanova_load_more_recurring_donations_ajax');
+
+
+
+/**
+ * How To Add Page Template From Plugin in WordPress
+ */
+//https://www.pradipdebnath.com/2019/08/17/how-to-add-page-template-from-plugin-in-wordpress/#:~:text=To%20add%20the%20page%20template,path%20for%20the%20template%20file.&text=After%20adding%20these%20codes%2C%20we,in%20the%20template%20dropdown%20list.
+add_filter('theme_page_templates', 'pt_add_page_template_to_dropdown');
+add_filter('template_include', 'pt_change_page_template', 99);
+add_action('wp_enqueue_scripts', 'pt_remove_style');
