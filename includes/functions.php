@@ -583,13 +583,12 @@ function wppb_forms_styles()
 
 
 
+
 /**
- * Add page templates.
- *
- * @param  array  $templates  The list of page templates
- *
- * @return array  $templates  The modified list of page templates
+ * How To Add Page Template From Plugin in WordPress
  */
+//https://www.pradipdebnath.com/2019/08/17/how-to-add-page-template-from-plugin-in-wordpress/#:~:text=To%20add%20the%20page%20template,path%20for%20the%20template%20file.&text=After%20adding%20these%20codes%2C%20we,in%20the%20template%20dropdown%20list.
+
 function pt_add_page_template_to_dropdown($templates)
 {
     $templates[plugin_dir_path(__FILE__) . 'parts/stripe-webhook-page-template.php'] = __('Stripe Webhook Page Template', 'doenanova-app');
@@ -597,16 +596,9 @@ function pt_add_page_template_to_dropdown($templates)
     return $templates;
 }
 
-/**
- * Change the page template to the selected template on the dropdown
- * 
- * @param $template
- *
- * @return mixed
- */
 function pt_change_page_template($template)
 {
-    if (is_page()) {
+    if (is_page('stripe-webhook')) {
         $meta = get_post_meta(get_the_ID());
 
         if (!empty($meta['_wp_page_template'][0]) && $meta['_wp_page_template'][0] != $template) {
@@ -617,10 +609,5 @@ function pt_change_page_template($template)
     return $template;
 }
 
-
-/**
- * How To Add Page Template From Plugin in WordPress
- */
-//https://www.pradipdebnath.com/2019/08/17/how-to-add-page-template-from-plugin-in-wordpress/#:~:text=To%20add%20the%20page%20template,path%20for%20the%20template%20file.&text=After%20adding%20these%20codes%2C%20we,in%20the%20template%20dropdown%20list.
 add_filter('theme_page_templates', 'pt_add_page_template_to_dropdown');
 add_filter('template_include', 'pt_change_page_template', 99);
