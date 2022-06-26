@@ -3,7 +3,7 @@
  * Plugin Name:		Doe na Nova
  * Plugin URI:		https://novaigreja.com/doe
  * Description:		Plataforma da Nova Igreja para receber doações online.
- * Version:			1.2
+ * Version:			1.3
  * Author:			Nova Digital Team
  * Author URI:		https://novaigreja.com
  * License:			GPL-2.0+
