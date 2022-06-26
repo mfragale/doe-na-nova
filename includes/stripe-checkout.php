@@ -241,7 +241,7 @@ function stripe_checkout()
 			//RECURRING DONATIONS
 			try {
 				$product = $stripe->products->create([
-					'name' => $amount,
+					'name' => $amount . " - " . $frequency,
 					'metadata' => ['Purpose' => $purpose, 'Frequency' => $frequency,],
 					'description' => 'Doação recorrente',
 				]);

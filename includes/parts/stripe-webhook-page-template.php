@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * A Stripe webhook to update a charge from a recurent payment on listen to "invoice.payment_succeeded" webhook.
+ */
+
 //Stripe
 include_once dirname(__FILE__) . '/stripe-setup.php';
 include_once($path_to_stripe_lib . 'init.php');
