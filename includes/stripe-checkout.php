@@ -243,7 +243,7 @@ function stripe_checkout()
 				$product = $stripe->products->create([
 					'name' => $amount . " - " . $frequency,
 					'metadata' => ['Purpose' => $purpose, 'Frequency' => $frequency,],
-					'description' => 'Doação recorrente',
+					'description' => 'Doação recorrente - 1º ciclo',
 				]);
 
 				$price = $stripe->prices->create([

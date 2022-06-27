@@ -111,7 +111,7 @@
 							}
 							?>
 						</select>
-						<label for="purpose"><?php _e('Purpose', 'doenanova'); ?></label>
+						<label for="purpose"><?php _e('Campus', 'doenanova'); ?></label>
 					</div><!-- <div class="select"> -->
 					<!-- ********** PURPOSE ********** -->
 

@@ -43,7 +43,13 @@ if ($event_json->type == "invoice.payment_succeeded") {
 
         $stripe->charges->update(
             $chargeId,
-            ['metadata' => ['Purpose' => $purpose, 'Frequency' => $frequency,]]
+            [
+                'metadata' => [
+                    'Purpose' => $purpose,
+                    'Frequency' => $frequency,
+                ],
+                'description' => 'Doação recorrente - ciclo contínuo'
+            ]
         );
     } catch (\Stripe\Exception\CardException $e) {
         // Since it's a decline, \Stripe\Error\Card will be caught
