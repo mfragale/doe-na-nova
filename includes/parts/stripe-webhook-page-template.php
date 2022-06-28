@@ -47,7 +47,7 @@ if ($event_json->type == "invoice.payment_succeeded") {
             $chargeId,
             [
                 'metadata' => [
-                    'Purpose' => $purpose,
+                    'Purpose' => 'hello',
                     'Frequency' => $frequency,
                 ],
                 'description' => $description
