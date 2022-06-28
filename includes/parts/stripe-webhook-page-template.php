@@ -41,6 +41,8 @@ if ($event_json->type == "invoice.payment_succeeded") {
 
         $frequency = $event_json->data->object->lines->data[0]->plan->metadata->Frequency;
 
+        $description = 'Doação recorrente - ciclo contínuo';
+
         $stripe->charges->update(
             $chargeId,
             [
@@ -48,7 +50,7 @@ if ($event_json->type == "invoice.payment_succeeded") {
                     'Purpose' => $purpose,
                     'Frequency' => $frequency,
                 ],
-                'description' => 'Doação recorrente - ciclo contínuo'
+                'description' => $description
             ]
         );
     } catch (\Stripe\Exception\CardException $e) {
@@ -118,3 +120,7 @@ http_response_code(200); // PHP 5.4 or greater
 
 
 <h1>Stripe Webhook Page</h1>
+<p><?php echo $chargeId ?></p>
+<p><?php echo $purpose ?></p>
+<p><?php echo $frequency ?></p>
+<p><?php echo $description ?></p>
