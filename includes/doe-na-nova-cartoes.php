@@ -50,7 +50,7 @@
 					<div class="accordion-item" id="">
 						<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#subs-<?php echo $card->id; ?>-dropdown" aria-expanded="true" aria-controls="subs-<?php echo $card->id; ?>-dropdown">
 							<div class="col">
-								<div><small><i class="fab fa-2x fa-cc-<?php echo strtolower($card->brand); ?>"></i></small> <?php echo $card->last4; ?></div>
+								<i class="fab fa-cc-<?php echo strtolower($card->brand); ?>"></i> <?php echo $card->last4; ?>
 							</div>
 							<div class="col text-end me-3">
 								<?php echo $card->funding; ?>
