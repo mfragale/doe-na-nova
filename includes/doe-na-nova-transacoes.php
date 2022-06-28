@@ -72,7 +72,7 @@
 							<tr class="<?php echo $status; ?> <?php echo $charge->id ?>">
 								<td>
 									<div><?php echo $charge_purpose; ?></div>
-									<div><small><?php echo $charge_frequency; ?></small></div>
+									<div><small class="text-muted"><?php echo $charge_frequency; ?></small></div>
 								</td>
 								<td><i class="fab fa-cc-<?php echo strtolower($charge->source->brand); ?>"></i> <?php echo $charge->source->last4; ?></td>
 								<td><?php echo date('d/m/y', $charge->created); ?></td>
