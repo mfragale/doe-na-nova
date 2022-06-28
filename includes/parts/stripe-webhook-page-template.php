@@ -35,7 +35,7 @@ $event_json = json_decode($input);
 if ($event_json->type == "invoice.payment_succeeded") {
 
     try {
-        $chargeId = $event_json->data->object->charge;
+        $paymentIntentId = $event_json->data->object->payment_intent;
 
         $purpose = $event_json->data->object->lines->data[0]->plan->metadata->Purpose;
 
@@ -43,8 +43,8 @@ if ($event_json->type == "invoice.payment_succeeded") {
 
         $description = 'Doação recorrente - ciclo contínuo';
 
-        $stripe->charges->update(
-            $chargeId,
+        $stripe->paymentIntents->update(
+            $paymentIntentId,
             [
                 'metadata' => [
                     'Purpose' => 'hello',
