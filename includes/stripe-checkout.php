@@ -157,7 +157,11 @@ function stripe_checkout()
 			}
 		}
 
+		// Nova Igreja Account
+		//'transfer_data' => ['destination' => 'acct_17wccsEYlIfdDhnn']
 
+		// Nova Igreja Joinville
+		//'transfer_data' => ['destination' => 'acct_1LFUM8LggNLHjwWn']
 
 		if ($frequency == 'one time') {
 
@@ -170,6 +174,7 @@ function stripe_checkout()
 					"receipt_email" => $user_email,
 					"metadata" => ['Purpose' => $purpose, 'Frequency' => $frequency,],
 					'description' => 'Doação única',
+					//'transfer_data' => ['destination' => 'acct_xxx'],
 				]);
 
 				$return_data["success"] = true;

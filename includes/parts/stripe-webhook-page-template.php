@@ -37,9 +37,9 @@ if ($event_json->type == "invoice.payment_succeeded") {
     try {
         $chargeId = $event_json->data->object->charge;
 
-        $purpose = $event_json->data->object->lines->data[0]->metadata->Purpose;
+        $purpose = $event_json->data->object->lines->data[0]->plan->metadata->Purpose;
 
-        $frequency = $event_json->data->object->lines->data[0]->metadata->Frequency;
+        $frequency = $event_json->data->object->lines->data[0]->plan->metadata->Frequency;
 
         $stripe->charges->update(
             $chargeId,
