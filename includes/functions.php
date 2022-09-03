@@ -97,13 +97,8 @@ add_filter('wp_mail_from_name', 'wpb_sender_name');
 
 
 
-
-/**
- * Ajax Callback doenanova_load_more_charges
- */
 function doenanova_load_more_charges_ajax()
 {
-
     global $stripe_publishable_key;
     global $stripe_secret_key;
     global $stripe_is_LIVE_mode;
@@ -117,10 +112,6 @@ function doenanova_load_more_charges_ajax()
         $customer_id = false;
     }
 
-
-    //Respond with JSON content
-    header('Content-Type: application/json');
-
     // Authenticate to the Stripe API
     $stripe = new \Stripe\StripeClient(
         $stripe_secret_key
@@ -129,12 +120,6 @@ function doenanova_load_more_charges_ajax()
     //Last charge loaded
     $last_charge = $_POST['last_charge'];
 
-    // Data to return
-    $return_data = array();
-
-    // Success or failure
-    $return_data["success"] = false;
-    $return_data["has_more_charges"] = false;
 
     try {
 
@@ -145,9 +130,22 @@ function doenanova_load_more_charges_ajax()
         ]);
 
 
-        foreach ($charges->data as $charge) {
 
-            $json_decoded = json_decode($charge);
+        foreach ($charges->data as $charge) {
+            if ($charge->status == 'succeeded') {
+                $badge = 'text-success';
+                $icon = 'check-circle';
+                $status = 'Succeeded';
+            } else if ($charge->status == 'pending') {
+                $badge = 'text-warning';
+                $icon = 'exclamation-circle';
+                $status = 'Pending';
+            } else if ($charge->status == 'failed') {
+                $badge = 'text-danger';
+                $icon = 'times-circle';
+                $status = 'Failed text-muted';
+            }
+
 
             if ($charge->invoice) { // charge is from a subscription
                 $invoice = $stripe->invoices->retrieve(
@@ -161,37 +159,33 @@ function doenanova_load_more_charges_ajax()
                 $charge_frequency = $charge->metadata->Frequency;
             }
 
-            // if ($charge_frequency == 'month') {
-            //     $charge_frequency = __('Monthly', 'doenanova');
-            // } else if ($charge_frequency == 'week') {
-            //     $charge_frequency = __('Weekly', 'doenanova');
-            // } else if ($charge_frequency == 'year') {
-            //     $charge_frequency = __('Yearly', 'doenanova');
-            // } else {
-            //     $charge_frequency = '';
-            // }
+            if ($charge_frequency == 'month') {
+                $charge_frequency = __('Monthly', 'doenanova');
+            } else if ($charge_frequency == 'week') {
+                $charge_frequency = __('Weekly', 'doenanova');
+            } else if ($charge_frequency == 'year') {
+                $charge_frequency = __('Yearly', 'doenanova');
+            } else {
+                $charge_frequency = '';
+            }
 
-            $return_data[] = array(
-                'charge_id' => $charge->id,
-                'charge_status' => $charge->status,
-                'charge_date' => $charge->created,
-                'charge_purpose' => $charge_purpose,
-                'charge_frequency' => $charge_frequency,
-                'charge_brand' => $charge->source->brand,
-                'charge_last_4' => $charge->source->last4,
-                'charge_amount' => $charge->amount / 100,
-            );
+?>
+
+            <tr class="<?php echo $status; ?> <?php echo $charge->id ?>">
+                <td>
+                    <div class="fw-bold"><?php echo $charge_purpose; ?></div>
+                    <div><small class="text-muted"><?php echo $charge_frequency; ?></small></div>
+                </td>
+                <td><i class="fab fa-cc-<?php echo strtolower($charge->source->brand); ?>"></i> <?php echo $charge->source->last4; ?></td>
+                <td><?php echo date('d/m/y', $charge->created); ?></td>
+                <td class="text-end <?php echo $badge; ?>"> <?php echo doe_na_nova_currency_symbol(); ?><?php echo $charge->amount / 100; ?>.00 </td>
+            </tr>
+
+
+<?php
         }
 
-        if ($charges->has_more) {
-            $return_data["has_more_charges"] = true;
-        }
-
-        $return_data["success"] = true;
-
-
-
-        //Invalid request errors arise when your request has invalid parameters.
+        $last_charge = $charge->id;
     } catch (\Stripe\Exception\InvalidRequestException $e) {
         error_log("CRITICAL ERROR: Stripe InvalidRequest");
         error_log('Stripe InvalidRequest - httpStatus:' . $e->getHttpStatus());
@@ -200,11 +194,230 @@ function doenanova_load_more_charges_ajax()
         if (isset($error_info['message'])) {
             error_log('Stripe InvalidRequest - message:' . $error_info['message']);
         }
-    } finally {
-        echo json_encode($return_data);
-        wp_die(); // required. to end AJAX request.
     }
 }
+
+
+
+/**
+ * Ajax Callback doenanova_load_more_charges
+ */
+// function doenanova_load_more_charges_ajax()
+// {
+
+//     global $stripe_publishable_key;
+//     global $stripe_secret_key;
+//     global $stripe_is_LIVE_mode;
+//     global $stripe_is_TEST_mode;
+
+//     if (get_user_meta(get_current_user_id(), '_stripe_customer_LIVE_id', true) && isset($stripe_is_LIVE_mode)) {
+//         $customer_id = get_user_meta(get_current_user_id(), '_stripe_customer_LIVE_id', true);
+//     } else if (get_user_meta(get_current_user_id(), '_stripe_customer_TEST_id', true) && isset($stripe_is_TEST_mode)) {
+//         $customer_id = get_user_meta(get_current_user_id(), '_stripe_customer_TEST_id', true);
+//     } else {
+//         $customer_id = false;
+//     }
+
+
+//     //Respond with JSON content
+//     header('Content-Type: application/json');
+
+//     // Authenticate to the Stripe API
+//     $stripe = new \Stripe\StripeClient(
+//         $stripe_secret_key
+//     );
+
+//     //Last charge loaded
+//     $last_charge = $_POST['last_charge'];
+
+//     // Data to return
+//     $return_data = array();
+
+//     // Success or failure
+//     $return_data["success"] = false;
+//     $return_data["has_more_charges"] = false;
+
+//     try {
+
+//         $charges = $stripe->charges->all([
+//             "customer" => $customer_id,
+//             "limit" => 10,
+//             "starting_after" => $last_charge
+//         ]);
+
+
+//         foreach ($charges->data as $charge) {
+
+//             $json_decoded = json_decode($charge);
+
+//             if ($charge->invoice) { // charge is from a subscription
+//                 $invoice = $stripe->invoices->retrieve(
+//                     $charge->invoice,
+//                     []
+//                 );
+//                 $charge_purpose = $invoice->lines->data[0]->metadata->Purpose;
+//                 $charge_frequency = $invoice->lines->data[0]->metadata->Frequency;
+//             } else { //charge is from a non recurrent donation
+//                 $charge_purpose = $charge->metadata->Purpose;
+//                 $charge_frequency = $charge->metadata->Frequency;
+//             }
+
+//             // if ($charge_frequency == 'month') {
+//             //     $charge_frequency = __('Monthly', 'doenanova');
+//             // } else if ($charge_frequency == 'week') {
+//             //     $charge_frequency = __('Weekly', 'doenanova');
+//             // } else if ($charge_frequency == 'year') {
+//             //     $charge_frequency = __('Yearly', 'doenanova');
+//             // } else {
+//             //     $charge_frequency = '';
+//             // }
+
+//             $return_data[] = array(
+//                 'charge_id' => $charge->id,
+//                 'charge_status' => $charge->status,
+//                 'charge_date' => $charge->created,
+//                 'charge_purpose' => $charge_purpose,
+//                 'charge_frequency' => $charge_frequency,
+//                 'charge_brand' => $charge->source->brand,
+//                 'charge_last_4' => $charge->source->last4,
+//                 'charge_amount' => $charge->amount / 100,
+//             );
+//         }
+
+//         if ($charges->has_more) {
+//             $return_data["has_more_charges"] = true;
+//         }
+
+//         $return_data["success"] = true;
+
+
+
+//         //Invalid request errors arise when your request has invalid parameters.
+//     } catch (\Stripe\Exception\InvalidRequestException $e) {
+//         error_log("CRITICAL ERROR: Stripe InvalidRequest");
+//         error_log('Stripe InvalidRequest - httpStatus:' . $e->getHttpStatus());
+//         $body = $e->getJsonBody();
+//         $error_info = $body['error'];
+//         if (isset($error_info['message'])) {
+//             error_log('Stripe InvalidRequest - message:' . $error_info['message']);
+//         }
+//     } finally {
+//         echo json_encode($return_data);
+//         wp_die(); // required. to end AJAX request.
+//     }
+// }
+
+
+
+
+
+
+// /**
+//  * Ajax Callback doenanova_load_more_recurring_donations
+//  */
+// function doenanova_load_more_recurring_donations_ajax()
+// {
+
+//     global $stripe_publishable_key;
+//     global $stripe_secret_key;
+//     global $stripe_is_LIVE_mode;
+//     global $stripe_is_TEST_mode;
+
+//     if (get_user_meta(get_current_user_id(), '_stripe_customer_LIVE_id', true) && isset($stripe_is_LIVE_mode)) {
+//         $customer_id = get_user_meta(get_current_user_id(), '_stripe_customer_LIVE_id', true);
+//     } else if (get_user_meta(get_current_user_id(), '_stripe_customer_TEST_id', true) && isset($stripe_is_TEST_mode)) {
+//         $customer_id = get_user_meta(get_current_user_id(), '_stripe_customer_TEST_id', true);
+//     } else {
+//         $customer_id = false;
+//     }
+
+
+//     //Respond with JSON content
+//     header('Content-Type: application/json');
+
+//     // Authenticate to the Stripe API
+//     $stripe = new \Stripe\StripeClient(
+//         $stripe_secret_key
+//     );
+
+//     //Last subscription loaded
+//     $last_subscription = $_POST['last_subscription'];
+
+//     // Data to return
+//     $return_data = array();
+
+//     // Success or failure
+//     $return_data["success"] = false;
+//     $return_data["has_more_subscriptions"] = false;
+
+//     try {
+
+//         $subscriptions = $stripe->subscriptions->all([
+//             "customer" => $customer_id,
+//             "status" => 'active',
+//             "limit" => 10,
+//             "starting_after" => $last_subscription
+//         ]);
+
+//         $customer = $stripe->customers->retrieve(
+//             $customer_id,
+//             []
+//         );
+
+//         if (isset($customer->default_source)) {
+//             $source = $stripe->customers->retrieveSource(
+//                 $customer_id,
+//                 $customer->default_source,
+//                 []
+//             );
+//             $customer_cardBrand = strtolower($source->brand);
+//             $customer_cardLast4 = $source->last4;
+//         } else {
+//             $customer_cardBrand = false;
+//             $customer_cardLast4 = __('No saved card.', 'doenanova');
+//         }
+
+
+//         foreach ($subscriptions->data as $subscription) {
+
+//             $json_decoded = json_decode($subscription);
+
+//             $return_data[] = array(
+//                 'subscription_id' => $subscription->id,
+//                 'subscription_date' => $subscription->created,
+//                 'subscription_status' => $subscription->status,
+//                 'subscription_purpose' => $subscription->metadata->Purpose,
+//                 'subscription_interval' => $subscription->plan->interval,
+//                 'customer_cardBrand' => $customer_cardBrand,
+//                 'customer_cardLast4' => $customer_cardLast4,
+//                 'subscription_planAmount' => $subscription->plan->amount / 100,
+//                 'subscription_nextBilling' => $subscription->current_period_end,
+//             );
+//         }
+
+//         if ($subscriptions->has_more) {
+//             $return_data["has_more_subscriptions"] = true;
+//         }
+
+//         $return_data["success"] = true;
+
+
+
+//         //Invalid request errors arise when your request has invalid parameters.
+//     } catch (\Stripe\Exception\InvalidRequestException $e) {
+//         error_log("CRITICAL ERROR: Stripe InvalidRequest");
+//         error_log('Stripe InvalidRequest - httpStatus:' . $e->getHttpStatus());
+//         $body = $e->getJsonBody();
+//         $error_info = $body['error'];
+//         if (isset($error_info['message'])) {
+//             error_log('Stripe InvalidRequest - message:' . $error_info['message']);
+//         }
+//     } finally {
+//         echo json_encode($return_data);
+//         wp_die(); // required. to end AJAX request.
+//     }
+// }
+
 
 
 
@@ -212,9 +425,9 @@ function doenanova_load_more_charges_ajax()
 
 
 /**
- * Ajax Callback doenanova_load_more_recurring_donations
+ * Ajax Callback doenanova_load_more_cards
  */
-function doenanova_load_more_recurring_donations_ajax()
+function doenanova_load_more_cards_ajax()
 {
 
     global $stripe_publishable_key;
@@ -239,63 +452,44 @@ function doenanova_load_more_recurring_donations_ajax()
         $stripe_secret_key
     );
 
-    //Last subscription loaded
-    $last_subscription = $_POST['last_subscription'];
+    //Last card loaded
+    $last_card = $_POST['last_card'];
 
     // Data to return
     $return_data = array();
 
     // Success or failure
     $return_data["success"] = false;
-    $return_data["has_more_subscriptions"] = false;
+    $return_data["has_more_cards"] = false;
 
     try {
 
-        $subscriptions = $stripe->subscriptions->all([
-            "customer" => $customer_id,
-            "status" => 'active',
-            "limit" => 10,
-            "starting_after" => $last_subscription
-        ]);
-
-        $customer = $stripe->customers->retrieve(
+        $cards = $stripe->customers->allSources(
             $customer_id,
-            []
+            [
+                'object' => 'card',
+                'limit' => 10,
+                "starting_after" => $last_card
+            ]
         );
 
-        if (isset($customer->default_source)) {
-            $source = $stripe->customers->retrieveSource(
-                $customer_id,
-                $customer->default_source,
-                []
-            );
-            $customer_cardBrand = strtolower($source->brand);
-            $customer_cardLast4 = $source->last4;
-        } else {
-            $customer_cardBrand = false;
-            $customer_cardLast4 = __('No saved card.', 'doenanova');
-        }
+        foreach ($cards->data as $card) {
 
-
-        foreach ($subscriptions->data as $subscription) {
-
-            $json_decoded = json_decode($subscription);
+            $json_decoded = json_decode($card);
 
             $return_data[] = array(
-                'subscription_id' => $subscription->id,
-                'subscription_date' => $subscription->created,
-                'subscription_status' => $subscription->status,
-                'subscription_purpose' => $subscription->metadata->Purpose,
-                'subscription_interval' => $subscription->plan->interval,
-                'customer_cardBrand' => $customer_cardBrand,
-                'customer_cardLast4' => $customer_cardLast4,
-                'subscription_planAmount' => $subscription->plan->amount / 100,
-                'subscription_nextBilling' => $subscription->current_period_end,
+                'card_id' => $card->id,
+                'card_last4' => $card->last4,
+                'card_funding' => $card->funding,
+                'card_brand' => strtolower($card->brand),
+                'card_name' => $card->name,
+                'card_exp_month' => $card->exp_month,
+                'card_exp_year' => $card->exp_year,
             );
         }
 
-        if ($subscriptions->has_more) {
-            $return_data["has_more_subscriptions"] = true;
+        if ($cards->has_more) {
+            $return_data["has_more_cards"] = true;
         }
 
         $return_data["success"] = true;
@@ -316,6 +510,8 @@ function doenanova_load_more_recurring_donations_ajax()
         wp_die(); // required. to end AJAX request.
     }
 }
+
+
 
 
 

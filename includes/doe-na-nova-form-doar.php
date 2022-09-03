@@ -22,8 +22,12 @@
 				'customer' => $customer_id
 			]);
 
-			$latest_charge_data = $latest_charge->data[0];
-			$latest_charge_meta_purpose = $latest_charge_data->metadata->Purpose;
+			// $latest_charge_data = $latest_charge->data[0];
+			// $latest_charge_meta_purpose = $latest_charge_data->metadata->Purpose;
+
+			$subsList = $stripe->subscriptions->all(['limit' => 10]);
+
+			$latest_donation_purpose = $latest_charge->data[0]->transfer_data->destination;
 		} else {
 			$customer_source = false;
 			$latest_charge_meta_purpose = false;
@@ -92,25 +96,29 @@
 					<!-- ********** PURPOSE ********** -->
 					<div class="form-floating">
 						<select class="form-select" id="purpose" name="purpose">
+
+
+
+
 							<?php
-							if (!empty($doenanova_options['donation_purposes'])) {
-								$donation_purposes = $doenanova_options['donation_purposes'];
-							} else {
-								$donation_purposes = __('Tithes & Offerings', 'doenanova');
-							}
+							$connectedAccounts = $stripe->accounts->all(['limit' => 100]);
 
-							$donation_purposes_lines = explode("\n", $donation_purposes); // or use PHP PHP_EOL constant
+							foreach ($connectedAccounts as $connectedAccount) { ?>
 
-							foreach ($donation_purposes_lines as $donation_purposes_line) { ?>
-
-								<option <?php if ($latest_charge_meta_purpose == trim($donation_purposes_line)) {
+								<option <?php if ($latest_donation_purpose == $connectedAccount->id) {
 											echo 'checked selected';
-										} ?> value="<?php echo trim($donation_purposes_line); ?>"><?php echo trim($donation_purposes_line); ?></option>';
+										} ?> value="<?php echo $connectedAccount->id; ?>"><?php echo $connectedAccount->settings->dashboard->display_name; ?></option>';
 
 							<?php
 							}
 							?>
+
 						</select>
+
+
+
+
+
 						<label for="purpose"><?php _e('Campus', 'doenanova'); ?></label>
 					</div><!-- <div class="select"> -->
 					<!-- ********** PURPOSE ********** -->
@@ -129,7 +137,7 @@
 						<select class="form-select" id="frequency" name="frequency">
 							<option value="one time" checked selected><?php _e('One time', 'doenanova'); ?></option>
 
-							<?php if (is_user_logged_in()) { ?>
+							<?php if (is_user_logged_in() && count($subsList) < 10) { ?>
 								<option value="week"><?php _e('Weekly', 'doenanova'); ?></option>
 								<option value="month"><?php _e('Monthly', 'doenanova'); ?></option>
 								<option value="year"><?php _e('Yearly', 'doenanova'); ?></option>

@@ -15,6 +15,14 @@ function doe_na_nova_form_js()
 	);
 
 	wp_register_script(
+		'add-card-js',
+		plugin_dir_url(__FILE__) . 'js/dist/add_card-min.js',
+		array('jquery'),
+		'1.1',
+		true
+	);
+
+	wp_register_script(
 		'functions-js',
 		plugin_dir_url(__FILE__) . 'js/dist/functions-min.js',
 		array('jquery', 'wp-i18n'),
@@ -38,6 +46,14 @@ function doe_na_nova_form_js()
 		true
 	);
 
+	wp_register_script(
+		'ajax_load_more_cards-js',
+		plugin_dir_url(__FILE__) . 'js/dist/ajax_load_more_cards-min.js',
+		array('jquery', 'wp-i18n'),
+		'1.1',
+		true
+	);
+
 	global $stripe_publishable_key;
 
 	$js_vars = array(
@@ -46,7 +62,8 @@ function doe_na_nova_form_js()
 		'current_url' => get_permalink(),
 		'stripe-pk' => $stripe_publishable_key,
 		'wp-action-doenanova-load-more-charges' => 'doenanova_load_more_charges',
-		'wp-action-doenanova-load-more-doacoes-recorrentes' => 'doenanova_load_more_recurring_donations',
+		'wp-action-doenanova-load-more-recurring-donations' => 'doenanova_load_more_recurring_donations',
+		'wp-action-doenanova-load-more-cards' => 'doenanova_load_more_cards',
 		'doe_na_nova_currency_symbol_js' => doe_na_nova_currency_symbol(),
 
 		//Localization with JavaScript in WordPress - https://wpengineer.com/2181/localization-with-javascript-in-wordpress/
@@ -86,6 +103,8 @@ function doe_na_nova_form_js()
 
 	wp_localize_script('functions-js', 'phpVars', $js_vars);
 	wp_localize_script('checkout-js', 'phpVars', $js_vars);
-	wp_localize_script('ajax_load_more_recurring_donations-js', 'phpVars', $js_vars);
+	wp_localize_script('addcard-js', 'phpVars', $js_vars);
 	wp_localize_script('ajax_load_more_charges-js', 'phpVars', $js_vars);
+	// wp_localize_script('ajax_load_more_recurring_donations-js', 'phpVars', $js_vars);
+	// wp_localize_script('ajax_load_more_cards-js', 'phpVars', $js_vars);
 }

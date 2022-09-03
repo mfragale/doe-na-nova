@@ -25,7 +25,7 @@ jQuery(document).ready(function ($) {
 
 		//Create our variables to be sent
 		dataSend = {};
-		dataSend.action = phpVars['wp-action-doenanova-load-more-doacoes-recorrentes'];
+		dataSend.action = phpVars['wp-action-doenanova-load-more-recurring-donations'];
 		dataSend.last_subscription = $('#last_subscription').val();
 
 		$('.loadmore_recurring_donations-message').hide();
@@ -179,8 +179,8 @@ jQuery(document).ready(function ($) {
 							<div class="accordion-item ` + subscription_status + `" id="subs-` + subscription_id + `">
 								<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#subs-` + subscription_id + `-dropdown" aria-expanded="true" aria-controls="subs-` + subscription_id + `-dropdown">
 									<div class="col">
-										<div>` + subscription_purpose + `</div>
-										<div><small>` + subscription_interval_localised + `</small></div>
+										<div class="fw-bold">` + subscription_purpose + `</div>
+										<div><small class="text-muted">` + subscription_interval_localised + `</small></div>
 									</div>
 									<div class="col text-end me-3">
 										` + phpVars.doe_na_nova_currency_symbol_js + `` + subscription_planAmount + `,00
@@ -189,12 +189,12 @@ jQuery(document).ready(function ($) {
 
 								<div id="subs-` + subscription_id + `-dropdown" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
 									<div class="accordion-body">
-										<form action="` + phpVars.action_url + `" method="POST">
-											<input type='hidden' name='action' value='stripe_cancel_subscription' />
-											<input type="hidden" name='subscription_id' value='` + subscription_id + `' />
-											<input type="hidden" name="current_url" id="current_url" value="` + phpVars.current_url + `">
-											<button class="btn btn-xs btn-danger float-end load-on-click cancel_subscription_btn" title="Delete this recurring donation"><i class="fas fa-trash-alt"></i></button>
-										</form>
+
+										<!-- Button trigger modal -->
+										<button class="btn btn-xs btn-danger float-end" data-bs-toggle="modal" data-bs-target="#` + subscription_id + `-modal" title="Deletar esta doação recorrente">
+											<i class="fas fa-trash-alt"></i>
+										</button>
+
 
 										<table class="table">
 											<tbody>
@@ -229,10 +229,35 @@ jQuery(document).ready(function ($) {
 											</tbody>
 										</table>
 
+										<!-- Modal -->
+										<div class="modal fade" id="` + subscription_id + `-modal" tabindex="-1" aria-labelledby="` + subscription_id + `-modalLabel" aria-hidden="true">
+											<div class="modal-dialog">
+												<div class="modal-content">
+													<div class="modal-header">
+														<h5 class="modal-title" id="` + subscription_id + `-modalLabel">Cancelar doação recorrente</h5 >
+														<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+													</div >
+													<div class="modal-body">
+														Tem certeza que deseja encerrar a doação ` + subscription_interval_localised + ` de ` + phpVars.doe_na_nova_currency_symbol_js + `` + subscription_planAmount + `,00 para ` + subscription_purpose + `?
+													</div>
+													<div class="modal-footer">
+														<form action="` + phpVars.action_url + `" method="POST">
+															<input type='hidden' name='action' value='stripe_cancel_subscription' />
+															<input type="hidden" name='subscription_id' value='` + subscription_id + `' />
+															<input type="hidden" name="current_url" id="current_url" value="` + phpVars.current_url + `">
+															<button type="button" class="btn btn-danger load-on-click">Sim, cancele por favor</button>
+														</form>
+													</div>
+												</div>
+											</div>
+										</div>
+
+
+
 									</div>
 								</div>
 							</div>
-							`;
+								`;
 
 
 

@@ -43,6 +43,11 @@ function minify_ajax_load_more_recurring_donations_js() {
         .pipe(minify({ noSource: true }))
         .pipe(dest('../js/dist'))
 }
+function minify_ajax_load_more_cards_js() {
+    return src('../js/ajax_load_more_cards.js', { allowEmpty: true })
+        .pipe(minify({ noSource: true }))
+        .pipe(dest('../js/dist'))
+}
 function minify_ajax_load_more_charges_js() {
     return src('../js/ajax_load_more_charges.js', { allowEmpty: true })
         .pipe(minify({ noSource: true }))
@@ -53,12 +58,17 @@ function minify_checkout_ui_js() {
         .pipe(minify({ noSource: true }))
         .pipe(dest('../js/dist'))
 }
+function minify_add_card_js() {
+    return src('../js/add_card.js', { allowEmpty: true })
+        .pipe(minify({ noSource: true }))
+        .pipe(dest('../js/dist'))
+}
 
 function watcher() {
     gulp.watch(['../scss/*.scss', '../js/*.js'],
-        gulp.series(buildCss, minify_functions_js, minify_ajax_load_more_recurring_donations_js, minify_ajax_load_more_charges_js, minify_checkout_ui_js));
+        gulp.series(buildCss, minify_functions_js, minify_ajax_load_more_recurring_donations_js, minify_ajax_load_more_charges_js, minify_checkout_ui_js, minify_add_card_js, minify_ajax_load_more_cards_js));
 }
 
-exports.watch = gulp.series(buildCss, watcher, minify_functions_js, minify_ajax_load_more_recurring_donations_js, minify_ajax_load_more_charges_js, minify_checkout_ui_js);
-exports.default = gulp.series(buildCss, watcher, minify_functions_js, minify_ajax_load_more_recurring_donations_js, minify_ajax_load_more_charges_js, minify_checkout_ui_js);
+exports.watch = gulp.series(buildCss, watcher, minify_functions_js, minify_ajax_load_more_recurring_donations_js, minify_ajax_load_more_charges_js, minify_checkout_ui_js, minify_add_card_js, minify_ajax_load_more_cards_js);
+exports.default = gulp.series(buildCss, watcher, minify_functions_js, minify_ajax_load_more_recurring_donations_js, minify_ajax_load_more_charges_js, minify_checkout_ui_js, minify_add_card_js, minify_ajax_load_more_cards_js);
 

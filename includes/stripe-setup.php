@@ -32,6 +32,18 @@ if (isset($doenanova_options['stripe_live_publishable_key']) && isset($doenanova
 	$stripe_is_TEST_mode = true;
 }
 
+
+
+// if (get_user_meta(get_current_user_id(), '_stripe_customer_LIVE_id', true) && isset($stripe_is_LIVE_mode)) {
+// 	$customer_id = get_user_meta(get_current_user_id(), '_stripe_customer_LIVE_id', true);
+// } else if (get_user_meta(get_current_user_id(), '_stripe_customer_TEST_id', true) && isset($stripe_is_TEST_mode)) {
+// 	$customer_id = get_user_meta(get_current_user_id(), '_stripe_customer_TEST_id', true);
+// } else {
+// 	$customer_id = false;
+// }
+
+
+
 //Show report
 if (isset($doenanova_options['show_report'])) {
 	$show_report = true;

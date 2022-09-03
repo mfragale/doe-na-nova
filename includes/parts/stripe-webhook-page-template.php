@@ -15,6 +15,9 @@ global $stripe_is_LIVE_mode;
 //to retrive the API keys from admin page
 global $doenanova_options;
 
+$currency = $doenanova_options['currency'];
+$platformAccountId = 'acct_17wccsEYlIfdDhnn';
+
 $stripe = new \Stripe\StripeClient(
     $stripe_secret_key
 );
@@ -27,91 +30,73 @@ header('Pragma: no-cache'); // HTTP 1.0.
 header('Expires: 0'); // Proxies.
 
 // Retrieve the request's body and parse it as JSON
-$input = @file_get_contents("php://input");
-$event_json = json_decode($input);
+//$input = @file_get_contents("php://input");
+//$event_json = json_decode($input);
 
+// This is your Stripe CLI webhook secret for testing your endpoint locally.
+$endpoint_secret = 'whsec_178fb16924187737e506af0ac7b934b2fcb4446a9b6dbcf7a780f741057934bf';
 
+$payload = @file_get_contents('php://input');
+$sig_header = $_SERVER['HTTP_STRIPE_SIGNATURE'];
+$event = null;
 
-if ($event_json->type == "invoice.payment_succeeded") {
+try {
+    $event = \Stripe\Webhook::constructEvent(
+        $payload,
+        $sig_header,
+        $endpoint_secret
+    );
+} catch (\UnexpectedValueException $e) {
+    // Invalid payload
+    http_response_code(400);
+    exit();
+} catch (\Stripe\Exception\SignatureVerificationException $e) {
+    // Invalid signature
+    http_response_code(400);
+    exit();
+}
 
-    try {
-        $paymentIntentId = $event_json->data->object->payment_intent;
+// Handle the event
+switch ($event->type) {
+    case 'invoice.payment_succeeded':
 
-        $purpose = $event_json->data->object->lines->data[0]->plan->metadata->Purpose;
-
-        $frequency = $event_json->data->object->lines->data[0]->plan->metadata->Frequency;
-
+        $paymentIntentId = $event->data->object->payment_intent;
+        $chargeId = $event->data->object->charge;
+        $amount = $event->data->object->lines->data[0]->amount;
+        $purpose = $event->data->object->lines->data[0]->plan->metadata->Purpose;
+        $frequency = $event->data->object->lines->data[0]->plan->metadata->Frequency;
         $description = 'Doação recorrente - ciclo contínuo';
 
-        $stripe->paymentIntents->update(
-            $paymentIntentId,
-            [
-                'metadata' => [
-                    'Purpose' => 'hello',
-                    'Frequency' => $frequency,
-                ],
-                'description' => $description
-            ]
+        $purposeObj = $stripe->accounts->retrieve(
+            $purpose,
+            []
         );
-    } catch (\Stripe\Exception\CardException $e) {
-        // Since it's a decline, \Stripe\Error\Card will be caught
-        $return_data["success"] = false;
-        $body = $e->getJsonBody();
-        $err  = $body['error'];
-        wp_redirect(home_url() . '' . doenanova_app_slug() . '' . $doenanova_options['page_donation_result'] . '?message=' . urlencode($err["message"]) . '&customer_id=' . $customer_id . '');
-        exit;
-        die();
-    } catch (\Stripe\Exception\RateLimitException $e) {
-        // Too many requests made to the API too quickly
-        $return_data["success"] = false;
-        $body = $e->getJsonBody();
-        $err  = $body['error'];
-        wp_redirect(home_url() . '' . doenanova_app_slug() . '' . $doenanova_options['page_donation_result'] . '?message=' . urlencode($err["message"]) . '&customer_id=' . $customer_id . '');
-        exit;
-        die();
-    } catch (\Stripe\Exception\InvalidRequestException $e) {
-        // Invalid parameters were supplied to Stripe's API
-        $return_data["success"] = false;
-        $body = $e->getJsonBody();
-        $err  = $body['error'];
-        wp_redirect(home_url() . '' . doenanova_app_slug() . '' . $doenanova_options['page_donation_result'] . '?message=' . urlencode($err["message"]) . '&customer_id=' . $customer_id . '');
-        exit;
-        die();
-    } catch (\Stripe\Exception\AuthenticationException $e) {
-        // Authentication with Stripe's API failed
-        // (maybe you changed API keys recently)
-        $return_data["success"] = false;
-        $body = $e->getJsonBody();
-        $err  = $body['error'];
-        wp_redirect(home_url() . '' . doenanova_app_slug() . '' . $doenanova_options['page_donation_result'] . '?message=' . urlencode($err["message"]) . '&customer_id=' . $customer_id . '');
-        exit;
-        die();
-    } catch (\Stripe\Exception\ApiConnectionException $e) {
-        // Network communication with Stripe failed
-        $return_data["success"] = false;
-        $body = $e->getJsonBody();
-        $err  = $body['error'];
-        wp_redirect(home_url() . '' . doenanova_app_slug() . '' . $doenanova_options['page_donation_result'] . '?message=' . urlencode($err["message"]) . '&customer_id=' . $customer_id . '');
-        exit;
-        die();
-    } catch (\Stripe\Exception\ApiErrorException $e) {
-        // Display a very generic error to the user, and maybe send yourself an email
-        $return_data["success"] = false;
-        $body = $e->getJsonBody();
-        $err  = $body['error'];
-        wp_redirect(home_url() . '' . doenanova_app_slug() . '' . $doenanova_options['page_donation_result'] . '?message=' . urlencode($err["message"]) . '&customer_id=' . $customer_id . '');
-        exit;
-        die();
-    } catch (Exception $e) {
-        // Something else happened, completely unrelated to Stripe
-        $return_data["success"] = false;
-        $body = $e->getMessage();
-        $err  = $body['error'];
-        wp_redirect(home_url() . '' . doenanova_app_slug() . '' . $doenanova_options['page_donation_result'] . '?message=' . urlencode($err["message"]) . '&customer_id=' . $customer_id . '');
-        exit;
-        die();
-    }
+
+        // $stripe->paymentIntents->update(
+        //     $paymentIntentId,
+        //     [
+        //         'metadata' => [
+        //             'Purpose' => $purposeObj->settings->dashboard->display_name,
+        //             'Frequency' => $frequency,
+        //         ],
+        //         'description' => $description
+        //     ]
+        // );
+
+        // // If Stripe Connected Account ID (Purpose) is not equal to Main Platform Account ID, then transfer the charge to Stripe Connected Account.
+        // if ($purpose != $platformAccountId) {
+        //     $transfer = $stripe->transfers->create([
+        //         "amount" => $amount * 100,
+        //         "currency" => $currency,
+        //         "source_transaction" => $chargeId,
+        //         "destination" => $purpose,
+        //     ]);
+        // }
+
+    default:
+        echo 'Received unknown event type ' . $event->type;
 }
+
 
 
 http_response_code(200); // PHP 5.4 or greater
@@ -120,7 +105,11 @@ http_response_code(200); // PHP 5.4 or greater
 
 
 <h1>Stripe Webhook Page</h1>
-<p><?php echo $chargeId ?></p>
-<p><?php echo $purpose ?></p>
-<p><?php echo $frequency ?></p>
-<p><?php echo $description ?></p>
+<p><?php //echo $chargeId 
+    ?></p>
+<p><?php //echo $purpose 
+    ?></p>
+<p><?php //echo $frequency 
+    ?></p>
+<p><?php //echo $description 
+    ?></p>

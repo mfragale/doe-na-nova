@@ -94,6 +94,8 @@ function doe_na_nova_saved_cards_shortcode($atts)
 
 	// Enqueue JS when this shortcode loaded.
 	wp_enqueue_script('functions-js');
+	wp_enqueue_script('add-card-js');
+	//wp_enqueue_script('ajax_load_more_cards-js');
 	wp_enqueue_script('font-awesome');
 
 	// Enqueue CSS when this shortcode loaded. 
@@ -115,7 +117,7 @@ function doe_na_nova_recurring_donations_shortcode($atts)
 
 	// Enqueue JS when this shortcode loaded.
 	wp_enqueue_script('functions-js');
-	wp_enqueue_script('ajax_load_more_recurring_donations-js');
+	//wp_enqueue_script('ajax_load_more_recurring_donations-js');
 	wp_enqueue_script('font-awesome');
 
 	// Enqueue CSS when this shortcode loaded. 

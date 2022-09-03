@@ -28,6 +28,10 @@ $dark: $gray-900;
 
 	// position: relative;
 
+	.btn {
+		min-height: 2.4em;
+	}
+
 	.doenanova-page-title {
 		margin-bottom: 20px;
 	}
@@ -128,13 +132,13 @@ $dark: $gray-900;
 			}
 		}
 
-		.cartoes-salvos {
-			.cartoes-salvos-last-4 {
-			}
+		// .cartoes-salvos {
+		// 	.cartoes-salvos-last-4 {
+		// 	}
 
-			.doenanova-btn {
-			}
-		}
+		// 	.doenanova-btn {
+		// 	}
+		// }
 	}
 	// DONATION FORM
 
@@ -165,11 +169,6 @@ $dark: $gray-900;
 		display: none;
 		text-align: center;
 	}
-
-	.delete_recurring_donation-message {
-		display: none;
-		text-align: center;
-	}
 	//AJAX
 
 	//RECURRING DONATIONS PAGE
@@ -180,14 +179,14 @@ $dark: $gray-900;
 			font-size: 0.8em;
 		}
 
-		table {
-			tbody {
-				tr {
-					td {
-					}
-				}
-			}
-		}
+		// table {
+		// 	tbody {
+		// 		tr {
+		// 			td {
+		// 			}
+		// 		}
+		// 	}
+		// }
 	}
 
 	//AJAX
@@ -267,6 +266,19 @@ $dark: $gray-900;
 			z-index: 1;
 		}
 	}
+
+	//AJAX
+	#loadmore_cards-btn_container {
+		text-align: center;
+		margin-top: 10px;
+		margin-bottom: 30px;
+	}
+	.loadmore_cards-message {
+		display: none;
+		text-align: center;
+	}
+	//AJAX
+
 	//SAVED CARDS PAGE
 
 	//DONATION RESULT PAGE
@@ -288,19 +300,19 @@ $dark: $gray-900;
 				margin: 0;
 			}
 
-			.notification {
-			}
+			// .notification {
+			// }
 		}
 
 		.resultado-doacao-footer {
 			text-align: center;
 
-			.doenanova-btn {
-				margin-bottom: 20px;
-			}
+			// .doenanova-btn {
+			// 	margin-bottom: 20px;
+			// }
 
-			small {
-			}
+			// small {
+			// }
 		}
 	}
 	//DONATION RESULT PAGE

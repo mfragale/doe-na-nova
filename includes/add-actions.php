@@ -37,11 +37,21 @@ add_action('init', 'register_doenanova_menu');
 add_action('admin_post_stripe_checkout', 'stripe_checkout'); // If the user is logged in
 add_action('admin_post_nopriv_stripe_checkout', 'stripe_checkout'); // If the user in not logged in
 
+add_action('admin_post_stripe_add_card', 'stripe_add_card'); // If the user is logged in
+add_action('admin_post_nopriv_stripe_add_card', 'stripe_add_card'); // If the user in not logged in
+
 add_action('admin_post_stripe_delete_card', 'stripe_delete_card'); // If the user is logged in
 add_action('admin_post_nopriv_stripe_delete_card', 'stripe_delete_card'); // If the user in not logged in
 
+
+add_action('admin_post_stripe_activate_card', 'stripe_activate_card'); // If the user is logged in
+add_action('admin_post_nopriv_stripe_activate_card', 'stripe_activate_card'); // If the user in not logged in
+
 add_action('admin_post_stripe_cancel_subscription', 'stripe_cancel_subscription'); // If the user is logged in
-add_action('admin_post_nopriv_stripe_cancel_subscription', 'stripe_cancel_subscription'); // If the user in not logged in
+add_action('admin_post_nopriv_stripe_cancel_subscription', 'stripe_cancel_subscription'); // If the user in not logged in 
+
+add_action('admin_post_stripe_change_card_for_subscription', 'stripe_change_card_for_subscription'); // If the user is logged in
+add_action('admin_post_nopriv_stripe_change_card_for_subscription', 'stripe_change_card_for_subscription'); // If the user in not logged in 
 
 
 
@@ -52,6 +62,10 @@ add_action('admin_post_nopriv_stripe_cancel_subscription', 'stripe_cancel_subscr
 add_action('wp_ajax_doenanova_load_more_charges', 'doenanova_load_more_charges_ajax');
 add_action('wp_ajax_nopriv_doenanova_load_more_charges', 'doenanova_load_more_charges_ajax');
 
-//Load More Recurring Donations
-add_action('wp_ajax_doenanova_load_more_recurring_donations', 'doenanova_load_more_recurring_donations_ajax');
-add_action('wp_ajax_nopriv_doenanova_load_more_recurring_donations', 'doenanova_load_more_recurring_donations_ajax');
+// //Load More Recurring Donations
+// add_action('wp_ajax_doenanova_load_more_recurring_donations', 'doenanova_load_more_recurring_donations_ajax');
+// add_action('wp_ajax_nopriv_doenanova_load_more_recurring_donations', 'doenanova_load_more_recurring_donations_ajax');
+
+//Load More Cards
+add_action('wp_ajax_doenanova_load_more_cards', 'doenanova_load_more_cards_ajax');
+add_action('wp_ajax_nopriv_doenanova_load_more_cards', 'doenanova_load_more_cards_ajax');
