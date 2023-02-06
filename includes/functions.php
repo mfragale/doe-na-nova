@@ -525,26 +525,26 @@ function doe_na_nova_register_form_shortcode() {
 /**
  * Registers doe-na-nova-nav
  */
-function register_doenanova_menu()
-{
-    register_nav_menus(
-        array(
-            'doe-na-nova-nav' => 'Doe na Nova Nav'
-        )
-    );
-}
+// function register_doenanova_menu()
+// {
+//     register_nav_menus(
+//         array(
+//             'doe-na-nova-nav' => 'Doe na Nova Nav'
+//         )
+//     );
+// }
 
 /*
  * Makes it possible to add link_class to wp_nav_menu
  */
-function add_menu_link_class($atts, $item, $args)
-{
-    if (property_exists($args, 'link_class')) {
-        $atts['class'] = $args->link_class;
-    }
-    return $atts;
-}
-add_filter('nav_menu_link_attributes', 'add_menu_link_class', 1, 3);
+// function add_menu_link_class($atts, $item, $args)
+// {
+//     if (property_exists($args, 'link_class')) {
+//         $atts['class'] = $args->link_class;
+//     }
+//     return $atts;
+// }
+// add_filter('nav_menu_link_attributes', 'add_menu_link_class', 1, 3);
 
 
 

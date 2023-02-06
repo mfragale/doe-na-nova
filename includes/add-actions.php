@@ -27,7 +27,7 @@ add_action('wp_enqueue_scripts', 'doe_na_nova_form_css');
 /**
  * Registers doe-na-nova-nav
  */
-add_action('init', 'register_doenanova_menu');
+//add_action('init', 'register_doenanova_menu');
 
 
 

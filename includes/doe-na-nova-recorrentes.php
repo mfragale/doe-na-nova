@@ -1,4 +1,5 @@
-<?php include(dirname(__FILE__) . '/doe-na-nova-nav.php'); ?>
+<?php //include(dirname(__FILE__) . '/doe-na-nova-nav.php'); 
+?>
 <?php include(dirname(__FILE__) . '/parts/part-wrap-start.php'); ?>
 
 

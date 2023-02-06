@@ -37,16 +37,16 @@ function doe_na_nova_donation_form_shortcode($atts)
 /**
  * doenanova HEADER SHORTCODE
  */
-function doe_na_nova_header_shortcode($atts)
-{
-	// Enqueue CSS when this shortcode loaded. 
-	wp_enqueue_style('doenanova-syles');
+// function doe_na_nova_header_shortcode($atts)
+// {
+// 	// Enqueue CSS when this shortcode loaded. 
+// 	wp_enqueue_style('doenanova-syles');
 
-	// Outputs the HTML to replace short code
-	ob_start();
-	include 'doe-na-nova-nav.php';
-	return ob_get_clean();
-}
+// 	// Outputs the HTML to replace short code
+// 	ob_start();
+// 	include 'doe-na-nova-nav.php';
+// 	return ob_get_clean();
+// }
 
 
 /**

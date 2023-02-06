@@ -322,37 +322,37 @@ $dark: $gray-900;
 }
 //#doenanova-wrap
 
-#doe-na-nova-nav {
-	ul {
-		li {
-			a {
-				font-size: 0.8em;
-				color: $gray-600;
-				border-radius: 0;
-				border: none;
+// #doe-na-nova-nav {
+// 	ul {
+// 		li {
+// 			a {
+// 				font-size: 0.8em;
+// 				color: $gray-600;
+// 				border-radius: 0;
+// 				border: none;
 
-				&:hover {
-					background-color: $gray-200;
-				}
+// 				&:hover {
+// 					background-color: $gray-200;
+// 				}
 
-				svg {
-					margin-right: 5px;
-				}
+// 				svg {
+// 					margin-right: 5px;
+// 				}
 
-				&.active {
-					background-color: $primary;
-					color: $gray-100;
-				}
-			}
-			@media only screen and (max-width: 460px) {
-				a {
-					font-size: 1em;
+// 				&.active {
+// 					background-color: $primary;
+// 					color: $gray-100;
+// 				}
+// 			}
+// 			@media only screen and (max-width: 460px) {
+// 				a {
+// 					font-size: 1em;
 
-					span {
-						display: none;
-					}
-				}
-			}
-		}
-	}
-}
+// 					span {
+// 						display: none;
+// 					}
+// 				}
+// 			}
+// 		}
+// 	}
+// }
