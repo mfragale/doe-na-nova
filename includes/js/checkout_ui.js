@@ -66,7 +66,7 @@ jQuery(document).ready(function ($) {
 				//If validation passes OK
 				stripe.createToken(card, cardData).then(function (result) {
 
-					console.log(result);
+					//console.log(result);
 
 					//Validate again, this time to check if Stripe has any errors
 					if (result.error && result.error.message) {

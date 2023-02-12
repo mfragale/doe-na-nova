@@ -9,10 +9,10 @@ jQuery(document).ready(function ($) {
 	*/
 
 	//Just checking if everything is working thus far
-	console.log("HELLO doenanova_load_more_charges");
+	//console.log("HELLO doenanova_load_more_charges");
 
 	//checking if we're getting our PHP variables
-	console.log(phpVars);
+	//console.log(phpVars);
 
 
 
@@ -22,7 +22,7 @@ jQuery(document).ready(function ($) {
 	$('#loadmore_recent_transactions-btn').click(function (e) {
 
 		//Confirm the button has been clicked
-		console.log("Load more button clicked");
+		//console.log("Load more button clicked");
 
 		//Create our variables to be sent
 		dataSend = {};
@@ -47,9 +47,9 @@ jQuery(document).ready(function ($) {
 			.done(function (data, status) {
 
 				//Show what has been the result
-				console.log("$.ajax.done");
-				console.log("data: ", data);
-				console.log("status: ", status);
+				//console.log("$.ajax.done");
+				//console.log("data: ", data);
+				//console.log("status: ", status);
 
 				$('#loadmore_recent_transactions-btn').removeAttr('disabled').removeClass('loading').html(originalButtonText);
 
@@ -158,10 +158,10 @@ jQuery(document).ready(function ($) {
 			.fail(function (data, status, error) {
 
 				//Show what has been the result
-				console.log("$.ajax.fail");
-				console.log("data: ", data);
-				console.log("status: ", status);
-				console.log("error: ", error);
+				//console.log("$.ajax.fail");
+				//console.log("data: ", data);
+				//console.log("status: ", status);
+				//console.log("error: ", error);
 
 				//Show this fail message if something went wrong with the AJAX sending
 				$('#loadmore_recent_transactions-btn').removeAttr('disabled').removeClass('loading').html(originalButtonText);
