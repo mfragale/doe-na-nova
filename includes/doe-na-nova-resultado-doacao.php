@@ -42,7 +42,7 @@ if ($stripe_publishable_key && $stripe_secret_key) { // IF STRIPE KEYS ARE SET B
 						</tr>
 						<tr>
 							<th scope="row"><?php _e('Method', 'doenanova'); ?></th>
-							<td><i class="fab fa-cc-<?php echo strtolower($charge->source->brand); ?>"></i> <?php echo $charge->source->last4; ?></td>
+							<td><i class="fa-brands fa-cc-<?php echo strtolower($charge->source->brand); ?>"></i> <?php echo $charge->source->last4; ?></td>
 						</tr>
 						<tr>
 							<th scope="row"><?php _e('Date', 'doenanova'); ?></th>

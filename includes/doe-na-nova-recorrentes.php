@@ -51,7 +51,7 @@
 			<?php if (isset($_GET['success'])) {
 				if (isset($_GET["cancelsubs"])) { ?>
 					<div class="alert alert-success">
-						<i class="fas fa-check"></i> <?php _e('Recurring donation deleted', 'doenanova'); ?>
+						<i class="fa-solid fa-check"></i> <?php _e('Recurring donation deleted', 'doenanova'); ?>
 					</div>
 			<?php }
 			} ?>
@@ -64,7 +64,7 @@
 					<?php
 					if ($subscription->status == 'active') {
 						$badge = 'is-success';
-						$icon = 'check-circle';
+						$icon = 'circle-check';
 						$status = 'Active';
 					}
 
@@ -94,7 +94,7 @@
 									<input type='hidden' name='action' value='stripe_cancel_subscription' />
 									<input type="hidden" name='subscription_id' value='<?php echo $subscription->id; ?>' />
 									<input type="hidden" name="current_url" id="current_url" value="<?php echo get_permalink(); ?>">
-									<button class="btn btn-xs btn-danger float-end load-on-click cancel_subscription_btn" title="<?php _e('Delete this recurring donation', 'doenanova'); ?>"><i class="fas fa-trash-alt"></i></button>
+									<button class="btn btn-xs btn-danger float-end load-on-click cancel_subscription_btn" title="<?php _e('Delete this recurring donation', 'doenanova'); ?>"><i class="fa-solid fa-trash"></i></button>
 								</form>
 
 								<table class="table">
@@ -117,7 +117,7 @@
 										</tr>
 										<tr>
 											<th scope="row"><?php _e('Payment method', 'doenanova'); ?></th>
-											<td><i class="fab fa-cc-<?php echo $customer_cardBrand; ?>"></i> <?php echo $customer_cardLast4; ?></td>
+											<td><i class="fa-brands fa-cc-<?php echo $customer_cardBrand; ?>"></i> <?php echo $customer_cardLast4; ?></td>
 										</tr>
 										<tr>
 											<th scope="row"><?php _e('Purpose', 'doenanova'); ?></th>
@@ -125,7 +125,7 @@
 										</tr>
 										<tr>
 											<th scope="row"><?php _e('Status', 'doenanova'); ?></th>
-											<td><span class="<?php echo $badge; ?> tag"><i class="fas fa-xs fa-<?php echo $icon; ?>"></i> <?php _e('Active', 'doenanova'); ?></span></td>
+											<td><span class="<?php echo $badge; ?> tag"><i class="fa-solid fa-xs fa-<?php echo $icon; ?>"></i> <?php _e('Active', 'doenanova'); ?></span></td>
 										</tr>
 									</tbody>
 								</table>

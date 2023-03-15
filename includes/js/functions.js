@@ -48,7 +48,7 @@ jQuery(document).ready(function ($) {
 	//ADD A LOADING STATE TO BUTTON ON CLICK
 	$('#doenanova-wrap').on('click', '.load-on-click', function (e) {
 		e.preventDefault();
-		$(this).attr('disabled', 'disabled').addClass('loading').html('<i class="fas fa-circle-notch fa-spin"></i>');
+		$(this).attr('disabled', 'disabled').addClass('loading').html('<i class="fa-solid fa-circle-notch fa-spin"></i>');
 
 		var form = $(this).parent();
 

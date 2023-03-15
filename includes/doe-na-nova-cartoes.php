@@ -36,7 +36,7 @@
 			<?php if (isset($_GET['success'])) {
 				if (isset($_GET["deletecard"])) { ?>
 					<div class="alert alert-success">
-						<i class="fas fa-check"></i> <?php _e('Card successfully deleted', 'doenanova'); ?>
+						<i class="fa-solid fa-check"></i> <?php _e('Card successfully deleted', 'doenanova'); ?>
 					</div>
 			<?php }
 			} ?>
@@ -51,7 +51,7 @@
 					<div class="accordion-item" id="">
 						<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#subs-<?php echo $card->id; ?>-dropdown" aria-expanded="true" aria-controls="subs-<?php echo $card->id; ?>-dropdown">
 							<div class="col">
-								<i class="fab fa-cc-<?php echo strtolower($card->brand); ?>"></i> <?php echo $card->last4; ?>
+								<i class="fa-brands fa-cc-<?php echo strtolower($card->brand); ?>"></i> <?php echo $card->last4; ?>
 							</div>
 							<div class="col text-end me-3">
 								<?php echo $card->funding; ?>
@@ -64,7 +64,7 @@
 									<input type='hidden' name='action' value='stripe_delete_card' />
 									<input type="hidden" name='card_id' value='<?php echo $card->id; ?>' />
 									<input type="hidden" name="current_url" id="current_url" value="<?php echo get_permalink(); ?>">
-									<button class="btn btn-xs btn-danger float-end load-on-click" title="<?php _e('Delete this card', 'doenanova'); ?>"><i class="fas fa-trash-alt"></i></button>
+									<button class="btn btn-xs btn-danger float-end load-on-click" title="<?php _e('Delete this card', 'doenanova'); ?>"><i class="fa-solid fa-trash"></i></button>
 								</form>
 
 								<table class="table">

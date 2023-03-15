@@ -171,11 +171,11 @@
 				<div class="card cartoes-salvos mb-2 text-light bg-dark">
 					<div class="card-body d-flex align-items-center justify-content-between">
 						<div class="cartoes-salvos-last-4">
-							<i class="fab fa-cc-<?php echo strtolower($card->brand); ?>"></i> •••• •••• •••• <span><?php echo $card->last4; ?></span>
+							<i class="fa-brands fa-cc-<?php echo strtolower($card->brand); ?>"></i> •••• •••• •••• <span><?php echo $card->last4; ?></span>
 						</div><!-- <div class="cartoes-salvos-last-4"> -->
 
 						<a href="<?php echo get_bloginfo('url') . '' . doenanova_app_slug() . '' . $doenanova_options['page_saved_card']; ?>" class="btn btn-sm btn-light load-on-click" title="<?php _e('Change payment method', 'doenanova'); ?>">
-							<i class="fas fa-exchange-alt"></i>
+							<i class="fa-solid fa-arrow-right-arrow-left"></i>
 						</a>
 					</div><!-- <div class="cartoes-salvos"> -->
 				</div>

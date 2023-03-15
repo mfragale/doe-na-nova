@@ -46,7 +46,7 @@ jQuery(document).ready(function ($) {
 			var originalButtonText = $('#payment-submit').html();
 
 			//Add loading state to the button
-			$('#payment-submit').attr('disabled', 'disabled').addClass('loading').html('<i class="fas fa-circle-notch fa-spin"></i>');
+			$('#payment-submit').attr('disabled', 'disabled').addClass('loading').html('<i class="fa-solid fa-circle-notch fa-spin"></i>');
 
 
 			var cardData = {
@@ -103,7 +103,7 @@ jQuery(document).ready(function ($) {
 			e.preventDefault();
 
 			var originalButtonText = $('#payment-submit').html();
-			$('#payment-submit').attr('disabled', 'disabled').addClass('loading').html('<i class="fas fa-circle-notch fa-spin"></i>');
+			$('#payment-submit').attr('disabled', 'disabled').addClass('loading').html('<i class="fa-solid fa-circle-notch fa-spin"></i>');
 
 			if ($(form)[0].checkValidity() === false) {
 				$('#payment-submit').removeAttr('disabled').removeClass('loading').html(originalButtonText);

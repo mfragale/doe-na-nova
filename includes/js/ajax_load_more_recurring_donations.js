@@ -34,7 +34,7 @@ jQuery(document).ready(function ($) {
 		var originalButtonText = $('#loadmore_recurring_donations-btn').html();
 
 		//Add loading state to the button
-		$('#loadmore_recurring_donations-btn').attr('disabled', 'disabled').addClass('loading').html('<i class="fas fa-circle-notch fa-spin"></i>');
+		$('#loadmore_recurring_donations-btn').attr('disabled', 'disabled').addClass('loading').html('<i class="fa-solid fa-circle-notch fa-spin"></i>');
 
 
 		$.ajax({
@@ -150,15 +150,15 @@ jQuery(document).ready(function ($) {
 
 							if (subscription_status == 'active') {
 								var badge = 'is-success';
-								var icon = 'check-circle';
+								var icon = 'circle-check';
 								var status = 'Succeeded';
 							} else if (subscription_status == 'incomplete') {
 								var badge = 'is-warning';
-								var icon = 'exclamation-circle';
+								var icon = 'circle-exclamation';
 								var status = 'Pending';
 							} else if (subscription_status == 'canceled') {
 								var badge = 'is-danger';
-								var icon = 'times-circle';
+								var icon = 'circle-xmark';
 								var status = 'Failed';
 							}
 
@@ -193,7 +193,7 @@ jQuery(document).ready(function ($) {
 											<input type='hidden' name='action' value='stripe_cancel_subscription' />
 											<input type="hidden" name='subscription_id' value='` + subscription_id + `' />
 											<input type="hidden" name="current_url" id="current_url" value="` + phpVars.current_url + `">
-											<button class="btn btn-xs btn-danger float-end load-on-click cancel_subscription_btn" title="Delete this recurring donation"><i class="fas fa-trash-alt"></i></button>
+											<button class="btn btn-xs btn-danger float-end load-on-click cancel_subscription_btn" title="Delete this recurring donation"><i class="fa-solid fa-trash"></i></button>
 										</form>
 
 										<table class="table">
@@ -216,7 +216,7 @@ jQuery(document).ready(function ($) {
 												</tr>
 												<tr>
 													<th scope="row">Método de pagamento</th>
-													<td><i class="fab fa-cc-` + customer_cardBrand + `"></i> ` + customer_cardLast4 + `</td>
+													<td><i class="fa-brands fa-cc-` + customer_cardBrand + `"></i> ` + customer_cardLast4 + `</td>
 												</tr>
 												<tr>
 													<th scope="row">Propósito</th>
@@ -224,7 +224,7 @@ jQuery(document).ready(function ($) {
 												</tr>
 												<tr>
 													<th scope="row">Status</th>
-													<td><span class="` + badge + ` tag"><i class="fas fa-xs fa-` + icon + `"></i> Ativo</span></td>
+													<td><span class="` + badge + ` tag"><i class="fa-solid fa-xs fa-` + icon + `"></i> Ativo</span></td>
 												</tr>
 											</tbody>
 										</table>

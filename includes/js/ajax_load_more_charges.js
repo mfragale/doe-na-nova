@@ -35,7 +35,7 @@ jQuery(document).ready(function ($) {
 		var originalButtonText = $('#loadmore_recent_transactions-btn').html();
 
 		//Add loading state to the button
-		$('#loadmore_recent_transactions-btn').attr('disabled', 'disabled').addClass('loading').html('<i class="fas fa-circle-notch fa-spin"></i>');
+		$('#loadmore_recent_transactions-btn').attr('disabled', 'disabled').addClass('loading').html('<i class="fa-solid fa-circle-notch fa-spin"></i>');
 
 
 		$.ajax({
@@ -103,15 +103,15 @@ jQuery(document).ready(function ($) {
 
 							if (charge_status == 'succeeded') {
 								var badge = 'text-success';
-								var icon = 'check-circle';
+								var icon = 'circle-check';
 								var status = 'Succeeded';
 							} else if (charge_status == 'pending') {
 								var badge = 'text-warning';
-								var icon = 'exclamation-circle';
+								var icon = 'circle-exclamation';
 								var status = 'Pending';
 							} else if (charge_status == 'failed') {
 								var badge = 'text-danger';
-								var icon = 'times-circle';
+								var icon = 'circle-xmark';
 								var status = 'Failed';
 							}
 
@@ -133,7 +133,7 @@ jQuery(document).ready(function ($) {
 										<div>` + charge_purpose + `</div>
 										<div><small>` + charge_frequency_localised + `</small></div>
 									</td>
-									<td><i class="fab fa-cc-` + charge_brand + `"></i> ` + charge_last_4 + `</td>
+									<td><i class="fa-brands fa-cc-` + charge_brand + `"></i> ` + charge_last_4 + `</td>
 									<td>` + charge_day + `/` + charge_month + `/` + charge_year + `</td>
 									<td class="text-end ` + badge + `"> ` + phpVars["doe_na_nova_currency_symbol_js"] + `` + charge_amount + `,00 </td>
 								</tr>

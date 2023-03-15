@@ -33,15 +33,15 @@
 							<?php
 							if ($charge->status == 'succeeded') {
 								$badge = 'text-success';
-								$icon = 'check-circle';
+								$icon = 'circle-check';
 								$status = 'Succeeded';
 							} else if ($charge->status == 'pending') {
 								$badge = 'text-warning';
-								$icon = 'exclamation-circle';
+								$icon = 'circle-exclamation';
 								$status = 'Pending';
 							} else if ($charge->status == 'failed') {
 								$badge = 'text-danger';
-								$icon = 'times-circle';
+								$icon = 'circle-xmark';
 								$status = 'Failed text-muted';
 							}
 
@@ -75,7 +75,7 @@
 									<div class="fw-bold"><?php echo $charge_purpose; ?></div>
 									<div><small class="text-muted"><?php echo $charge_frequency; ?></small></div>
 								</td>
-								<td><i class="fab fa-cc-<?php echo strtolower($charge->source->brand); ?>"></i> <?php echo $charge->source->last4; ?></td>
+								<td><i class="fa-brands fa-cc-<?php echo strtolower($charge->source->brand); ?>"></i> <?php echo $charge->source->last4; ?></td>
 								<td><?php echo date('d/m/y', $charge->created); ?></td>
 								<td class="text-end <?php echo $badge; ?>"> <?php echo doe_na_nova_currency_symbol(); ?><?php echo $charge->amount / 100; ?>.00 </td>
 							</tr>
