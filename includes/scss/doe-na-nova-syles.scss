@@ -1,25 +1,5 @@
-//$white:    #fff;
-$gray-100: #f1f5fa;
-$gray-200: #e9ecef;
-$gray-300: #dde0e6;
-$gray-400: #b5b8bf;
-$gray-500: #6e7489;
-$gray-600: #6c757d;
-$gray-700: #404251;
-$gray-800: #343a40;
-$gray-900: #161720;
-//$black:    #000;
-
-$gn: #f0ff00;
-
-$primary: #7c88f5;
-$secondary: #6e7489;
-$success: #07fc6d;
-$info: #3a4cef;
-$warning: #f2cc9c;
-$danger: #ff694c;
-$light: $gray-100;
-$dark: $gray-900;
+@import "../../../../themes/Nova-2021-Theme/scss/custom-variables";
+@import "../gulp/node_modules/bootstrap/scss/bootstrap";
 
 #doenanova-wrap {
 	// padding: 30px 10px;
