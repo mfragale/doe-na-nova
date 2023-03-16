@@ -53,7 +53,7 @@
 			DONATION FORM 
 			********** -->
 
-		<form id="form-doar" class="mt-3 mb-5" action="<?php echo get_admin_url(); ?>admin-post.php" method="POST">
+		<form id="form-doar" class="mt-3 mb-1" action="<?php echo get_admin_url(); ?>admin-post.php" method="POST">
 
 			<?php //THIS FIELD WILL DETERMINE WHAT ACTION THE FROM SHOULD DO - relating to doe-na-nova-form-doar.php and stripe-checkout.php 
 			?>

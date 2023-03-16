@@ -1,5 +1,8 @@
 jQuery(document).ready(function ($) {
 
+	// console.log('loaded');
+	// $('body').css('background-color', '#f30');
+
 	//Ajusts #amount input size according to the text inside it
 	function ajustInputWidth() {
 		var num_caracteres_valor = $("#form-doar #amount").val().length;
@@ -8,6 +11,7 @@ jQuery(document).ready(function ($) {
 			width: "40" * num_caracteres_valor,
 		}, 100, function () {
 			// Animation complete.
+			console.log('ajustInputWidth');
 		});
 	}
 
@@ -33,15 +37,6 @@ jQuery(document).ready(function ($) {
 			e.preventDefault();
 		}
 	});
-
-
-
-
-	//Fade in and zoom out for #doenanova-wrap
-	// function doenanova_wrap_fadein() {
-	// 	$('#doenanova-wrap').css({ "transform": "scale(1)", "opacity": "100" });
-	// }
-	// setTimeout(doenanova_wrap_fadein, 200);
 
 
 
