@@ -17,7 +17,7 @@ function doe_na_nova_donation_form_shortcode($atts)
 	global $stripe_publishable_key;
 
 	// Enqueue JS when this shortcode loaded.
-	wp_enqueue_script('my-functions-js');
+	wp_enqueue_script('my-functions-doe-js');
 	wp_enqueue_script('checkout-js');
 	wp_enqueue_script('font-awesome');
 
