@@ -17,7 +17,7 @@ function doe_na_nova_form_js()
 	wp_register_script(
 		'my-functions-doe-js',
 		plugin_dir_url(__FILE__) . 'js/dist/myfunctions-min.js',
-		array('jquery'),
+		array('jquery', 'wp-i18n'),
 		'1.1',
 		true
 	);
